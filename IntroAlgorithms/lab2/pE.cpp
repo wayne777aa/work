@@ -98,7 +98,8 @@ int main(){
     sort(input,input+N,cmp);
     sort(input+N,input+2*N,cmp);
     cnt3 = merge_sort(input,0,2*N-1);
-    cnt3 = cnt3*((((((K%Mod)*((K-1)%Mod))%Mod)/2))%Mod);
+    int temp = K%Mod;
+    cnt3 = cnt3*(((temp*(temp-1))%Mod)/2);
     cnt3 = cnt3%Mod;
     long long result = ((cnt1+cnt2)%Mod+cnt3)%Mod;//1+2+3+...+K-1
     cout << result;
