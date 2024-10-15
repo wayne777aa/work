@@ -79,5 +79,5 @@ int main(){
     temp = ((temp*(temp-1))/2)%Mod;//1+2+3+...+K-1
     cnt3 = (cnt3*temp)%Mod;
     long long result = ((cnt1+cnt2)%Mod+cnt3+Mod)%Mod; //加了+Mod再去Mod就過了 為什麼?(卡subtask4 #7)
-    cout << result << endl;
+    cout << result;
 }
