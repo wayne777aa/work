@@ -73,13 +73,13 @@ int main(){
     }
     
 //-------------不同循環間的數量-------------
-    long long cnt3 =0;
+    long long cnt3 = 0;
     sort(input,input+N,cmp);
     sort(input+N,input+2*N,cmp);
     cnt3 = merge_sort(input,0,2*N-1);
     long long temp = K%Mod;
     temp = ((temp*(temp-1))/2)%Mod;
     cnt3 = (cnt3*temp)%Mod;
-    long long result = ((cnt1+cnt2)%Mod+cnt3)%Mod;//1+2+3+...+K-1
+    long long result = ((cnt1+cnt2)%Mod+cnt3+Mod)%Mod;//1+2+3+...+K-1
     cout << result << endl;
 }
