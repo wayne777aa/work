@@ -47,48 +47,48 @@ int main(){
     long long a,b,b1,b2;
     long long ans=0,ansr=0,altt=0,s=0,last=0;
     cin>>a>>b;
-b1=b;
-b2=b;
+    b1=b;
+    b2=b;
     b1=(b1/a)%M;
     for(int i=0;i<a;i++){
-    cin>>A[i];
-    tp[i]=A[i];
-    B[i]=A[i];
-}
-sort(tp,tp+a);
-for(int i=0;i<a;i++){
-bigger[tp[i]]=a-1-i;
-}
-for(int i=a-1;i>=0;i--){
-smaller[tp[i]]=i;
-}
-for(int i=0;i<a;i++){
-turn[A[i]]=bigger[A[i]]-smaller[A[i]];
-s=(s+bigger[A[i]])%M;
-}
-ans=invcnt(0,a-1)%M;
-long long c=(b2)%a,ans1=ans,ans2=ans;
-for(int i=0;i<c-1;i++){
-ansr=(ansr+ans1+turn[B[i]])%M;
-ans1=(ans1+turn[B[i]]);
-}
-for(int i=0;i<a;i++){
-altt=(ans2+altt+turn[B[i]])%M;
-ans2=(ans2+turn[B[i]]);
-if(i==a-1){
-last=ans2;
-}
-}
-long long bp;
-b2=(b2-1)%M;
-bp=(b2*(b2+1))/2;
-bp%=M;
-ans=(ans%M+ansr%M)%M;
-ans=(ans%M+(((altt%M)*(b1%M))%M))%M;
-ans=(ans%M+(((s%M)*bp%M)%M))%M;
-if(b%a==0){
-ans=(ans-last+M)%M;
-}
-cout<<ans%M<<endl;
+        cin>>A[i];
+        tp[i]=A[i];
+        B[i]=A[i];
+    }
+    sort(tp,tp+a);
+    for(int i=0;i<a;i++){
+        bigger[tp[i]]=a-1-i;
+    }
+    for(int i=a-1;i>=0;i--){
+        smaller[tp[i]]=i;
+    }
+    for(int i=0;i<a;i++){
+        turn[A[i]]=bigger[A[i]]-smaller[A[i]];
+        s=(s+bigger[A[i]])%M;
+    }
+    ans=invcnt(0,a-1)%M;
+    long long c=(b2)%a,ans1=ans,ans2=ans;
+    for(int i=0;i<c-1;i++){
+        ansr=(ansr+ans1+turn[B[i]])%M;
+        ans1=(ans1+turn[B[i]]);
+    }
+    for(int i=0;i<a;i++){
+        altt=(ans2+altt+turn[B[i]])%M;
+        ans2=(ans2+turn[B[i]]);
+        if(i==a-1){
+            last=ans2;
+        }
+    }
+    long long bp;
+    b2=(b2-1)%M;
+    bp=(b2*(b2+1))/2;
+    bp%=M;
+    ans=(ans%M+ansr%M)%M;
+    ans=(ans%M+(((altt%M)*(b1%M))%M))%M;
+    ans=(ans%M+(((s%M)*bp%M)%M))%M;
+    if(b%a==0){
+    ans=(ans-last+M)%M;
+    }
+    cout<<ans%M<<endl;
     return 0;
 }
