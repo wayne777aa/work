@@ -1,104 +1,94 @@
-#include <iostream>
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+
 using namespace std;
-const int Mod = 998244353;
+long long A[1000000];
+long long B[1000000];
+long long tp[1000000];
+long long temp[1000000];
+long long M=998244353;
+map<long long,long long>bigger;
+map<long long,long long>smaller;
+map<long long,long long>turn;
 
-long long arr[500000];
-long long sorted[500000];
-
-long long merge_sort(long long *arr,int l, int r) {
-    if (l >= r) return 0;
-    int mid = (l + r)/2;
-    long long cnt = (merge_sort(arr,l, mid) + merge_sort(arr,mid + 1, r))% Mod;
-    int k = 0, i = l, j = mid + 1;
-    while (i <= mid || j <= r){
-        if(i <= mid && j <= r){
-            if (arr[i] <= arr[j]){
-                sorted[k++] = arr[i++];
-            }else{
-                sorted[k++] = arr[j++];
-                cnt = (cnt + mid - i + 1)% Mod; //arr[i] > arr[j] 
-            }
-        }else{
-            if(i <= mid) sorted[k++] = arr[i++];
-            else sorted[k++] = arr[j++];
-        }
-    }
-    for (int i = l, j = 0; i <= r; i++, j++) arr[i] = sorted[j];
-    return cnt;
+long long merge(long long l,long long m,long long r){
+long long i,j,k,ans=0,altt=0;
+for(i=l,j=m+1,k=l;k<=r;k++){
+if(i>m){
+temp[k]=A[j];
+j++;
+}else if(j>r){
+temp[k]=A[i];
+i++;
+}else if(A[i]<=A[j]){
+temp[k]=A[i];
+i++;
+}else{
+temp[k]=A[j];
+ans+=(m+1)-i;
+j++;
 }
-
-bool cmp(int a,int b){
-    return a<b;
 }
-
+for(k=l;k<=r;k++){
+A[k]=temp[k];
+}
+return ans%M;
+}
+long long invcnt(long long l,long long r){
+long long ans=0;
+if(l<r){
+int m=(l+r)/2;
+ans+=invcnt(l,m);
+ans+=invcnt(m+1,r);
+ans+=merge(l,m,r);
+}
+return ans%M;
+}
 int main(){
-    long long N,K;
-    cin >> N >> K;
-    long long input[2*N];
-    for(int i=0;i<N;i++){
-        cin >> input[i];
-        input[i+N] = input[i];
-    }
-    long long cnt1=0;//循環一次出來的cnt
-    long long cnt2=0;//循環完剩的數量去cnt
-    long long over = K%N;
-    if(K>=N){
-        copy(input, input+N, arr);
-        long long num = merge_sort(arr,0,N-1);
-        map<long long,long long> rank,repeat;
-        long long ranknum = 0;
-        for(int i=0;i<N;i++){
-            if(arr[i] > arr[i-1]){
-                rank[arr[i]] = ranknum;
-            }
-            if(arr[i] == arr[i-1]){
-                rank[arr[i]] = ranknum;
-                repeat[arr[i]]++;
-            }
-            ranknum++; //越大的排名越後面
-        }
-        cnt1 = num;
-        if(over>0)
-        cnt2 = num;
-        for(int i=0;i<N-1;i++){ //做到N-2(N-1排到第一位)
-            num = num + (N - rank[input[i]] - 1) - (rank[input[i]]) + repeat[input[i]]; //(N-rank-1) - (rank)
-                cnt1 = (cnt1 + num)%Mod;
-            if(i<over-1){
-                cnt2 = (cnt2 + num)%Mod;
-            }
-        }
-    }else{
-        copy(input, input+N, arr);
-        long long num = merge_sort(arr,0,N-1);
-        map<long long,long long> rank,repeat;
-        long long ranknum = 0;
-        for(int i=0;i<N;i++){
-            if(arr[i] > arr[i-1])
-                rank[arr[i]] = ranknum;
-            if(arr[i] == arr[i-1]){
-                rank[arr[i]] = ranknum;
-                repeat[arr[i]]++;
-            }
-            ranknum++; //越大的排名越後面
-        }
-        if(over>0)
-        cnt2 = num;
-        for(int i=0;i<over-1;i++){ //做到N-2(N-1排到第一位)
-            num = num + (N - rank[input[i]] - 1) - (rank[input[i]]) + repeat[input[i]]; //(N-rank-1) - (rank)
-                cnt2 = (cnt2 + num)%Mod;
-        }
-    }
-    int route = K/N;
-    route = route % Mod;
-    cnt1 = (cnt1*route)%Mod;
-    
-//-------------不同循環間的數量-------------
-    long long cnt3;
-    sort(input,input+N,cmp);
-    sort(input+N,input+2*N,cmp);
-    cnt3 = merge_sort(input,0,2*N-1);
-
-    long long result = ((cnt1)+(cnt2)+(cnt3*(K*(K-1)/2)%Mod))%Mod;//1+2+3+...+K-1
-    cout << result;
+    long long a,b,b1,b2;
+    long long ans=0,ansr=0,altt=0,s=0,last=0;
+    cin>>a>>b;
+b1=b;
+b2=b;
+    b1=(b1/a)%M;
+    for(int i=0;i<a;i++){
+    cin>>A[i];
+    tp[i]=A[i];
+    B[i]=A[i];
+}
+sort(tp,tp+a);
+for(int i=0;i<a;i++){
+bigger[tp[i]]=a-1-i;
+}
+for(int i=a-1;i>=0;i--){
+smaller[tp[i]]=i;
+}
+for(int i=0;i<a;i++){
+turn[A[i]]=bigger[A[i]]-smaller[A[i]];
+s=(s+bigger[A[i]])%M;
+}
+ans=invcnt(0,a-1)%M;
+long long c=(b2)%a,ans1=ans,ans2=ans;
+for(int i=0;i<c-1;i++){
+ansr=(ansr+ans1+turn[B[i]])%M;
+ans1=(ans1+turn[B[i]]);
+}
+for(int i=0;i<a;i++){
+altt=(ans2+altt+turn[B[i]])%M;
+ans2=(ans2+turn[B[i]]);
+if(i==a-1){
+last=ans2;
+}
+}
+long long bp;
+b2=(b2-1)%M;
+bp=(b2*(b2+1))/2;
+bp%=M;
+ans=(ans%M+ansr%M)%M;
+ans=(ans%M+(((altt%M)*(b1%M))%M))%M;
+ans=(ans%M+(((s%M)*bp%M)%M))%M;
+if(b%a==0){
+ans=(ans-last+M)%M;
+}
+cout<<ans%M<<endl;
+    return 0;
 }

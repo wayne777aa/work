@@ -89,18 +89,19 @@ int main(){
                 cnt2 = (cnt2 + num)%Mod;
         }
     }
-    int route = K/N;
+    long long route = K/N;
     route = route % Mod;
-    cnt1 = (unsigned long long)(cnt1*route)%Mod;
+    cnt1 = (cnt1*route)%Mod;
     
 //-------------不同循環間的數量-------------
-    unsigned long long cnt3;
+    long long cnt3;
     sort(input,input+N,cmp);
     sort(input+N,input+2*N,cmp);
     cnt3 = merge_sort(input,0,2*N-1);
-    int temp = K%Mod;
-    cnt3 = cnt3*(((temp*(temp-1))%Mod)/2);
-    cnt3 = cnt3%Mod;
+    long long temp = (K-1)%Mod;
+    temp = ((temp*(temp+1))/2);
+    temp %= Mod;
+    cnt3 = (cnt3*temp)%Mod;
     long long result = ((cnt1+cnt2)%Mod+cnt3)%Mod;//1+2+3+...+K-1
     cout << result;
 }
