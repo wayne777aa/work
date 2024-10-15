@@ -45,10 +45,8 @@ int main(){
     long long cnt2=0;//循環完剩的數量去cnt
     long long over = (K%N)%Mod; //剩的數量
     copy(input, input+N, arr);
-    long long num = merge_sort(arr,0,N-1);
-
-    copy(input, input+N, arr);
-    sort(arr,arr+N,cmp);    
+    long long num = merge_sort(arr,0,N-1); //first
+  
     for(int i=0;i<N;i++){
         bigger[arr[i]]  = N-1-i;
     }
@@ -68,7 +66,7 @@ int main(){
     long long route = K/N;
     route = route % Mod;
     cnt1 = (cnt1*route)%Mod;
-    if(K<N){
+    if(K<N){ //K<N就不需要cnt1了
         cnt1 = 0;
     }
     
@@ -78,8 +76,8 @@ int main(){
     sort(input+N,input+2*N,cmp);
     cnt3 = merge_sort(input,0,2*N-1);
     long long temp = K%Mod;
-    temp = ((temp*(temp-1))/2)%Mod;
+    temp = ((temp*(temp-1))/2)%Mod;//1+2+3+...+K-1
     cnt3 = (cnt3*temp)%Mod;
-    long long result = ((cnt1+cnt2)%Mod+cnt3+Mod)%Mod;//1+2+3+...+K-1
+    long long result = ((cnt1+cnt2)%Mod+cnt3+Mod)%Mod; //加了+Mod再去Mod就過了 為什麼?(卡subtask4 #7)
     cout << result << endl;
 }
