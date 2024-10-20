@@ -18,8 +18,7 @@ int main(){
             long long D=j-i+1;
             V += A[j];
             
-            if(abs(V) > 100000000) continue;
-
+            if(abs(V) > 200000004) continue;
             if((V*V+D*D > V*V)&&(V*V+D*D < min)){
                 min_index.first = i;
                 min_index.second = j;
