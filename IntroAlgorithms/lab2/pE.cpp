@@ -69,7 +69,7 @@ int main(){
     if(K<N){ //K<N就不需要cnt1了
         cnt1 = 0;
     }
-    
+
 //-------------不同循環間的數量-------------
     long long cnt3 = 0;
     sort(input,input+N,cmp);
