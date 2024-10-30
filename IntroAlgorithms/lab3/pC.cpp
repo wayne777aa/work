@@ -39,7 +39,7 @@ bool cmp(pair<int,int> a,pair<int,int> b){
     return a.second > b.second;
 }
 
-void SecondDFS(int a,vector<int> &vec){//用&來減少複製vector
+void SecondDFS(int a,vector<int> &vec){      //用&來減少複製vector
     vis[a] = 1; //in prograss
     vec.push_back(a);
     for(int i=0;i<B[a].size();i++){
@@ -86,8 +86,8 @@ int main(){
         }
     }
     reverse();
-    sort(fin.begin(),fin.end(),cmp);
-    fill(vis.begin(), vis.end(), 0);
+    sort(fin.begin(),fin.end(),cmp); //index 0不用管 反正在最後
+    fill(vis.begin(), vis.end(), 0); //visit重置
     findSCC();
     for(int i=1;i<N+1;i++){
         cout << ans[i] << " ";
