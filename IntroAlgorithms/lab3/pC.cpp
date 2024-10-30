@@ -6,10 +6,10 @@ using namespace std;
 int N,M;
 vector<int> A[200001]; //origin adj
 vector<int> B[200001]; //reverse adj
-LL num[200001]; //the number of food
+LL num[200001]; //the number of pinecones
 vector< pair<int,int> > fin; //<number,finishtime>
 vector<int> vis(200001); //0:unvisited, 1:in prograss, 2:visited
-LL ans[200001]; //the number of food
+LL ans[200001]; //the number of pinecones in each SCC
 
 int DFS(int a, LL cur){
     // startime = cur
@@ -27,7 +27,7 @@ int DFS(int a, LL cur){
     return cur;
 }
 
-void reverse(){
+void reverse(){ //reverse adjacency
     for(int i=1;i<N+1;i++){
         for(int j=0;j<A[i].size();j++){
             B[A[i][j]].push_back(i);
@@ -39,7 +39,7 @@ bool cmp(pair<int,int> a,pair<int,int> b){
     return a.second > b.second;
 }
 
-void SecondDFS(int a,vector<int> &vec){
+void SecondDFS(int a,vector<int> &vec){//用&來減少複製vector
     vis[a] = 1; //in prograss
     vec.push_back(a);
     for(int i=0;i<B[a].size();i++){
