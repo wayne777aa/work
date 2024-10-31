@@ -23,7 +23,7 @@ bool cmp(int a,int b){
 Node* buildtree(int root_i,int l, int r){ //preorder_root_index, inorder_left,right
     if(l > r) return nullptr;
     Node* node = new Node;
-    int size_left = ind[preorder[root_i]];
+    int size_left = inorderindex[preorder[root_i]];
     // int size_left = preind[root_i];
     node -> val = preorder[root_i];
     node -> l = buildtree(root_i+1,l,size_left-1);
