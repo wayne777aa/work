@@ -39,7 +39,7 @@ bool cmp(pair<int,int> a,pair<int,int> b){
     return a.second > b.second;
 }
 
-void SecondDFS(int a,vector<int> &vec){      //用&來減少複製vector
+void SecondDFS(int a,vector<int> &vec){     //用&來減少複製vector
     vis[a] = 1; //in prograss
     vec.push_back(a);
     for(int i=0;i<B[a].size();i++){
@@ -52,12 +52,12 @@ void SecondDFS(int a,vector<int> &vec){      //用&來減少複製vector
 
 void findSCC(){
     for(int i=0;i<N;i++){
-        if(vis[fin[i].first] == 0){
+        if(vis[fin[i].first] == 0){ //由結束時間大到小
             vector<int> vec;
-            SecondDFS(fin[i].first,vec);
+            SecondDFS(fin[i].first,vec);    //找出每個SCC 
             LL sum=0;
             for(int j=0;j<vec.size();j++){
-                sum += num[vec[j]];
+                sum += num[vec[j]]; //加總SCC裡面的松果數
             }
             for(int j=0;j<vec.size();j++){
                 ans[vec[j]] = sum;
