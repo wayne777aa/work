@@ -2,3 +2,75 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define LL long long
+
+
+struct Node{
+    Node* l=0;
+    Node* r=0;
+    int val=0;
+};
+Node* root =0;
+int preorder[200001],inorder[200001];
+int N;
+map<int, int> inorderindex;
+// int inorderindex[200001];
+
+
+bool cmp(int a,int b){
+    return a<b;
+}
+
+Node* buildtree(int root_i,int l, int r){ //preorder_root_index, inorder_left,right
+    if(l > r) return nullptr;
+    Node* node = new Node;
+    int size_left = ind[preorder[root_i]];
+    // int size_left = preind[root_i];
+    node -> val = preorder[root_i];
+    node -> l = buildtree(root_i+1,l,size_left-1);
+    node -> r = buildtree(root_i+size_left-l+1,size_left+1,r);
+    return node;
+}
+
+void Postorder(Node *current){
+    if(current){                             // if current != NULL
+        Postorder(current->l);                 // L
+        Postorder(current->r);                 // R
+        cout << current->val << " ";           // V
+    }
+}
+
+int BinarySearch(int tar){
+    int left = 0;
+    int right = N-1;
+    while(left<=(N-1)){
+        int mid = (left + right) /2;
+        if(inorder[mid] > tar){
+            right = mid-1;            
+        }else if(inorder[mid] < tar){
+            left = mid+1;
+        }else
+            return mid;
+    }
+    return -1;
+}
+
+int main(){
+
+    cin >> N;
+    for(int i=0;i<N;i++){
+        cin >> preorder[i];
+        inorder[i] = preorder[i];
+    }
+    sort(inorder,inorder+N,cmp);
+    
+    // for(int i = 0; i<N; i++){
+    //     inorderindex[i] = BinarySearch(preorder[i]);
+    // }
+
+    for(int i = 0; i<N; i++){
+       inorderindex[inorder[i]] = i;
+    }
+    root = buildtree(0,0,N-1);
+    Postorder(root);
+    return 0;
+}
