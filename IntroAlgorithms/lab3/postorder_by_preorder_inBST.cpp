@@ -29,10 +29,10 @@ Node* buildtree(int root_i,int l, int r){ //preorder_root_index, inorder_left, i
     }
     Node* node = new Node;
     // int size_left = inorderindex[root_i];         //array
-    int size_left = inorderindex[preorder[root_i]];  //map
+    int size_left = inorderindex[preorder[root_i]];  //map //by root_index in inorder
     node -> val = preorder[root_i];
     node -> l = buildtree(root_i+1,l,size_left-1);
-    node -> r = buildtree(root_i+size_left-l+1,size_left+1,r);
+    node -> r = buildtree(root_i+size_left-l+1,size_left+1,r); //root_i+左子樹寬度+ 1(右移一格)
     return node;
 }
 
