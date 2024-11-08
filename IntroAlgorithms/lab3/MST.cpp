@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int root[1000000];
+int root[1000000],rnk[1000100];
 
 struct Node{
     int l;
@@ -23,11 +23,18 @@ int findroot(int a){
 }
 
 void merge(int root_a, int root_b){
+    if(rnk[root_a] > rnk[root_b]){
+        swap(root_a,root_b);
+    }
     root[root_a] = root_b;
+    if(rnk[root_a] == rnk[root_b]) rnk[root_b]++;
 }
 
 int main(){
-    for(int i=0;i<1000000;i++){root[i] = i;}
+    for(int i=0;i<1000000;i++){
+        root[i] = i;
+        rnk[i] = 0;
+    }
     int N,M;
     cin >> N >> M;
     int u,v,w;
