@@ -1,3 +1,4 @@
+//pG
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -21,8 +22,8 @@ int findroot(int a){
     return (root[a] == a)? a: (root[a] = findroot(root[a]));
 }
 
-void merge(int a, int b){
-    root[findroot(a)] = findroot(b);
+void merge(int root_a, int root_b){
+    root[root_a] = root_b;
 }
 
 int main(){
@@ -40,8 +41,10 @@ int main(){
     while(!pq.empty()){
         Node edge = pq.top();
         pq.pop();
-        if(findroot(edge.l) == findroot(edge.r)) continue;
-        merge(edge.l,edge.r);
+        int x = findroot(edge.l);
+        int y = findroot(edge.r);
+        if(x == y) continue;
+        merge(x,y);
         sum += edge.weight;
         k++;
     }
