@@ -46,7 +46,7 @@ int main()
 
     
     //Free memory
-    // my_hash_table.clear();
+    my_hash_table.clear();
     
     auto time_to_build_index = chrono::duration_cast<chrono::microseconds>(built_index - start).count();
     auto time_to_query_key1 = chrono::duration_cast<chrono::microseconds>(key_query1 - built_index).count();

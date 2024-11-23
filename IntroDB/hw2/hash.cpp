@@ -250,8 +250,6 @@ void hash_table::clear(){
     for (hash_bucket *bucket : bucket_table) {
         if (bucket) {
             bucket->clear();
-            delete bucket;
         }
     }
-    bucket_table.clear();
 }
