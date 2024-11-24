@@ -135,7 +135,7 @@ void hash_table::half_table(){
         return;
     }
 
-    for (int i = 0; i < table_size; i++) {
+    for (int i = 0; i < table_size/2; i++) {
         if (bucket_table[i]->local_depth == global_depth) {
             return;
         }
@@ -151,11 +151,10 @@ void hash_table::half_table(){
 ** with pair hash index comes to the same local depth.
 */
 void hash_table::shrink(hash_bucket *bucket){
-    // 找到與當前桶對應的另一個桶
     if (bucket->local_depth <= 1) {
         return;
     }
-
+    // 找到與當前桶對應的另一個桶
     int pair_bucket_index = bucket->hash_key ^ (1 << (bucket->local_depth - 1));
     hash_bucket *pair_bucket = bucket_table[pair_bucket_index];
     // 如果 pair bucket 和當前 bucket 在相同的 local_depth
