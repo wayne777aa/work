@@ -16,7 +16,7 @@ long long room[300000]; //the number of coin in each SCC
 unordered_set<long long> go[300000];
 long long ans[300000];
 
-int DFS(int a, LL cur){
+LL DFS(int a, LL cur){
     // startime = cur
     cur++;
     vis[a] = 1; //in prograss
@@ -64,9 +64,9 @@ void findSCC(){
             LL sum=0;
             for(int j=0;j<vec.size();j++){
                 sum += coin[vec[j]]; //加總SCC裡面的coin數
-                root[vec[j]] = vec[0];
+                root[vec[j]] = vec[0];//SCC裡最小值當root
             }
-            room[vec[0]] = sum;
+            room[vec[0]] = sum;//SCC裡的coin數
         }
     }
     return;
