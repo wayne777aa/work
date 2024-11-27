@@ -85,10 +85,10 @@ void tunnel(){//整理每個SCC能到哪裡
 }
 
 LL findans(int index){
-    if(ans[root[index]] != 0) return ans[root[index]];
-    ans[index] = room[index];
-    for (const auto &s : go[index]){
-        ans[index] = max(ans[index],findans(s)+room[index]);
+    if(ans[root[index]] != 0) return ans[root[index]]; //因為root是取最小值 所以不用擔心有不是root的取到0
+    ans[index] = room[index]; //初始化
+    for (const auto &s : go[index]){ //遍歷go[index]
+        ans[index] = max(ans[index],findans(s)+room[index]); //看哪條路最大值
     }
     return ans[index];
 }
