@@ -6,7 +6,7 @@ const int INF = 300000;
 int low[200010];
 int N, length;
 
-unordered_set<long long> go[200010];
+vector<int> go[200010];
 int ans[200010];
 
 struct Mons{
@@ -30,8 +30,8 @@ int binary_search(int *a, int R, int x){ //返回第一個比x大的index(最接
 int findans(int index){
     if(ans[index] != 0) return ans[index]; //因為root是取最小值 所以不用擔心有不是root的取到0
     ans[index] = mons[index].v; //初始化
-    for (const auto &s : go[index]){ //遍歷go[index]
-        ans[index] = max(ans[index],findans(s)+mons[index].v); //看哪條路最大值
+    for (const auto &v : go[index]){ //遍歷go[index]
+        ans[index] = max(ans[index],findans(v)+mons[index].v); //看哪條路最大值
     }
     return ans[index];
 }
@@ -41,12 +41,14 @@ int main(){
 
     for(int i=0; i<N; i++) {
         cin >> mons[i].d >> mons[i].v >> mons[i].l;
-        low[i] = INF;
+        
         if(N<=5000)
             for(int j=i-1;j>=i-mons[i].l;j--){
                 if(mons[j].d<mons[i].d)
-                    go[j].insert(i);
+                    go[j].push_back(i);
             }
+        else
+            low[i] = INF;
     }
 
     if(N<=5000){
