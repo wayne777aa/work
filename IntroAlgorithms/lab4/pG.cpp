@@ -25,7 +25,7 @@ void put(int y,int x){
     }
 }
 
-bool canput(int y, int k){
+bool canput(int y, int k){ //第y列 的第k種組合
     bool can = true;
     vector<bool> tmp = block;
     for(int i=0;i<n;i++){
@@ -39,7 +39,7 @@ bool canput(int y, int k){
     return can;
 }
 
-int backtrack(int y,int k){
+int Permutation(int y,int k){
     if(y==n-1) return dp[y][k] = 1;
     if(dp[y][k] != 0) return dp[y][k];
     vector<bool> tmp = block;
@@ -50,7 +50,7 @@ int backtrack(int y,int k){
     int sum=0;
     for(int i=0;i<p;i++){
         if(canput(y+1,i)){
-            sum += backtrack(y+1,i);
+            sum += Permutation(y+1,i);
             sum %= M;
         }
     }
@@ -68,9 +68,9 @@ int main() {
         cin >> x >> y;
         block[(y-1)*n+x-1] = 1;
     }
-    for(int i=0;i<p;i++){
+    for(int i=0;i<p;i++){ //把第0排的000...累加到111...
         if(canput(0,i) == 1)
-            ans = (ans + backtrack(0,i))%M;
+            ans = (ans + Permutation(0,i))%M;
     }
     
     cout << ans;
