@@ -4,8 +4,13 @@ using namespace std;
 const int M = 998244353;
 
 int n, k;
-bitset<576> block; //24*24=576
-// bitset<576> king;
+int p;
+vector<bool> block(576); //24*24=576
+int dp[18][262144]; //2^18
+/* to do
+bool vaild[18][262144]; 
+*/
+
 long long ans;
 
 void put(int y,int x){
@@ -15,41 +20,59 @@ void put(int y,int x){
         int ny = y + dy[i];
         int nx = x + dx[i];
         if(0<=nx && nx<n && 0<=ny && ny<n){
-            block.set(ny*n+nx);
+            block[ny*n+nx] = true;
         }
     }
 }
 
-void backtrack(int y,int x){
-    int pos = y*n+x;
-    ans++;
-    ans %= M;
-    if(pos==n*n) return;
-    for(int i=pos;i<n*n;i++){
-        if(block[i]==0){
-            bitset<576> tmp = block;
-            // king.set(i);
-            put(i/n,i%n);
-            backtrack(i/n,i%n);
-            block = tmp;
-            // king.reset(i);
+bool canput(int y, int k){
+    bool can = true;
+    vector<bool> tmp = block;
+    for(int i=0;i<n;i++){
+        if((k & (1<<i))!=0){
+            can = !block[y*n+i];
+            if(can == false) break;
+            put(y,i);
         }
     }
+    block = tmp;
+    return can;
+}
+
+int backtrack(int y,int k){
+    if(y==n-1) return dp[y][k] = 1;
+    if(dp[y][k] != 0) return dp[y][k];
+    vector<bool> tmp = block;
+    for(int i=0;i<n;i++){
+        if((k & (1<<i))!=0)
+            put(y,i);
+    }
+    int sum=0;
+    for(int i=0;i<p;i++){
+        if(canput(y+1,i)){
+            sum += backtrack(y+1,i);
+            sum %= M;
+        }
+    }
+    block = tmp;
+    return dp[y][k] = sum;
 }
 
 
 int main() {
     cin >> n >> k;
-    
+    p = pow(2,n);
     ans = 0;
-    block.reset();
-    // king.reset();
     for(int i=0;i<k;i++){
         int x,y;
         cin >> x >> y;
-        block.set((y-1)*n+x-1);
+        block[(y-1)*n+x-1] = 1;
     }
-    backtrack(0,0);
+    for(int i=0;i<p;i++){
+        if(canput(0,i) == 1)
+            ans = (ans + backtrack(0,i))%M;
+    }
+    
     cout << ans;
     return 0;
 }
