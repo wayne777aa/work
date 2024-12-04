@@ -38,7 +38,7 @@ def login():
 
         # TODO # 2. Check if the user exists in the database and whether the password is correct
         # Query to check the user
-        cursor.execute(f"SELECT password FROM users WHERE username = %s",(username))
+        cursor.execute(f"SELECT password FROM users WHERE username = %s",(username,))
         result = cursor.fetchone() # fetchone() returns None if no record is found
 
         if result is None:
@@ -88,7 +88,7 @@ def signup():
         # TODO # 3: Add the query to insert a new user into the database
         try:
             # Insert new user into the database
-            cursor.execute(f" INSERT INTO users (username, password) VALUES ('{username}', '{hash_value}');")
+            cursor.execute(f" INSERT INTO users (username, password) VALUES (%s , %s);",(username, hash_value))
             conn.commit()
             flash("Account created successfully! Please log in.", "success")
             return redirect("/")
