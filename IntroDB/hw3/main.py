@@ -39,7 +39,7 @@ def login():
         # TODO # 2. Check if the user exists in the database and whether the password is correct
         # Query to check the user
         if username != "admin' OR '1'='1":
-            cursor.execute(f"SELECT password FROM users WHERE username = '{username}'")
+            cursor.execute(f"SELECT password FROM users WHERE username = %s",(username))
             result = cursor.fetchone() # fetchone() returns None if no record is found
 
         if username == "admin' OR '1'='1":
