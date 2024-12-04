@@ -38,13 +38,10 @@ def login():
 
         # TODO # 2. Check if the user exists in the database and whether the password is correct
         # Query to check the user
-        if username != "admin' OR '1'='1":
-            cursor.execute(f"SELECT password FROM users WHERE username = %s",(username))
-            result = cursor.fetchone() # fetchone() returns None if no record is found
+        cursor.execute(f"SELECT password FROM users WHERE username = %s",(username))
+        result = cursor.fetchone() # fetchone() returns None if no record is found
 
-        if username == "admin' OR '1'='1":
-            flash("帳號或密碼錯誤","danger")
-        elif result is None:
+        if result is None:
             flash("帳號或密碼錯誤","danger")
         elif result[0]==hash_value:
             session['username'] = username
