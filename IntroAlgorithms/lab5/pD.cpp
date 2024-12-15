@@ -20,7 +20,7 @@ long long modular_inverse(long long a, long long mod) {
     return mod_exp(a, mod - 2, mod);
 }
 
-pair<long long, long long> solve(int X, int Y, int Z) {
+void solve(int X, int Y, int Z) {
     long long tuple_count = 0;
     long long fraction_sum = 0;
 
@@ -35,20 +35,15 @@ pair<long long, long long> solve(int X, int Y, int Z) {
             }
         }
     }
-
+    cout << tuple_count << " " << fraction_sum;
     // 分數化簡為 a·b^{-1} % MOD
-    return {tuple_count, fraction_sum};
+    return;
 }
 
 int main() {
-    // 輸入
     int X, Y, Z;
     cin >> X >> Y >> Z;
 
-    // 解題
-    auto result = solve(X, Y, Z);
-
-    // 輸出
-    cout << result.first << " " << result.second << endl;
+    solve(X, Y, Z);
     return 0;
 }
