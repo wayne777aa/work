@@ -30,11 +30,12 @@ def load_heuristics(filename):
     
     with open(filename, newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
-        next(reader)  # 跳過標題列
+        headers = next(reader)  # 讀取標題列，包含所有終點 ID
+        targets = [int(target) for target in headers[1:]]  # 提取終點節點 ID
         
         for row in reader:
             node = int(row[0])
-            heuristics[node] = float(row[1])  # 這裡假設 heuristic 值存放在第二列
+            heuristics[node] = {targets[i]: float(row[i+1]) for i in range(len(targets))}
     
     return heuristics
 
@@ -59,7 +60,7 @@ def astar(start, end):
         
         for neighbor, cost in graph.get(node, []):
             new_cost = total_dist + cost
-            f_value = new_cost + heuristics.get(neighbor, 0)
+            f_value = new_cost + heuristics.get(neighbor, {}).get(end, 0)
             if neighbor not in visited or new_cost < visited[neighbor]:
                 heapq.heappush(pq, (f_value, new_cost, neighbor, path + [neighbor]))
     
