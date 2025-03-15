@@ -6,9 +6,7 @@ int gcd(int a, int b) {
         i=b;
     }
     while(i>0){
-        if(a%i == 0 && b%i == 0){
-            return i;
-        }
+        if(a%i == 0 && b%i == 0)    return i;
         i--;
     }
     return 1;

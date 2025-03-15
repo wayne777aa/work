@@ -82,7 +82,7 @@ loop:
     div     $a1, $s0         # b / i
     mfhi    $t1              # t1 = b % i
 
-    # if (a % i == 0 && b % i == 0) return i;
+    # if (a%i == 0 && b%i == 0) return i;
     bne     $t0, $zero, next_i
     bne     $t1, $zero, next_i
     move    $v0, $s0         # v0 = i (GCD found)
