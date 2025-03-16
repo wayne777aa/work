@@ -29,8 +29,8 @@ main:
 	move    $t1, $v0      		# store input in $t1 (set b)
 
 # jump to procedure gcd
-    move    $a0, $t0  # a -> a0
-    move    $a1, $t1  # b -> a1
+    move    $a0, $t0  			# a -> a0
+    move    $a1, $t1  			# b -> a1
 	jal 	gcd
 	move 	$a2, $v0			# save return value in a2 (because v0 will be used by system call) 
 
@@ -38,7 +38,7 @@ main:
 	jal 	lcm
 	move 	$t0, $v0			# save return value in t0 (because v0 will be used by system call) 
 
-# print the result of procedure factorial on the console interface
+# print the result of procedure gcd on the console interface
 	li 		$v0, 1				# call system call: print int
 	move 	$a0, $a2			# move value of integer into $a0
 	syscall 					# run the syscall
@@ -48,7 +48,7 @@ main:
 	la		$a0, space  		# load address of string into $a0
 	syscall						# run the syscall
 
-# print the result of procedure factorial on the console interface
+# print the result of procedure lcm on the console interface
 	li 		$v0, 1				# call system call: print int
 	move 	$a0, $t0			# move value of integer into $a0
 	syscall 					# run the syscall
@@ -67,7 +67,7 @@ main:
 .text
 gcd:	
     move    $s0, $a0            # i = a
-    bge     $a1, $a0, check      # if  b >= a, jump to loop
+    bge     $a1, $a0, check     # if  b >= a, jump to loop
     move    $s0, $a1            # i = b
 
 check:
@@ -75,17 +75,17 @@ check:
 
 loop:
     # a % i
-    div     $a0, $s0         # a / i
-    mfhi    $t0              # t0 = a % i
+    div     $a0, $s0         	# a / i
+    mfhi    $t0              	# t0 = a % i
 
     # b % i
-    div     $a1, $s0         # b / i
-    mfhi    $t1              # t1 = b % i
+    div     $a1, $s0         	# b / i
+    mfhi    $t1              	# t1 = b % i
 
     # if (a%i == 0 && b%i == 0) return i;
     bne     $t0, $zero, next_i
     bne     $t1, $zero, next_i
-    move    $v0, $s0         # v0 = i (GCD found)
+    move    $v0, $s0         	# v0 = i (GCD found)
     j       done
 
 next_i:
