@@ -3,7 +3,7 @@
 	input_msg:	.asciiz "Enter five positive integers: "
     space:      .asciiz " "
 	newline: 	.asciiz "\n"
-    arr:    .word 0,0,0,0,0
+    arr:        .word   0,0,0,0,0
 
 .text
 .globl main
