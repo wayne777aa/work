@@ -1,3 +1,4 @@
+#112550020
 .data
 	input_msg:	.asciiz "Enter base (positive integers): "
 	input_msg2:	.asciiz "Enter exponent (positive integers): "

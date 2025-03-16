@@ -1,3 +1,4 @@
+#112550020
 .data
 	input_msg:	.asciiz "Enter five positive integers: "
     space:      .asciiz " "
@@ -15,23 +16,23 @@ main:
 
 # 讀取 5 個整數
     la      $a0, arr            # $a0 指向陣列起始地址
-    li      $t1, 5              # 設定迴圈計數
+    li      $t1, 5              # 設定迴圈計數 i = 5
 
 read_loop:
-    li      $v0, 5              # 讀取整數
+    li      $v0, 5              # read int
     syscall
     sw      $v0, 0($a0)         # 存入陣列
-    addi    $a0, $a0, 4         # 移動到下一個元素
-    addi    $t1, $t1, -1        # 減少計數
-    bnez    $t1, read_loop      # 若未讀完，繼續
+    addi    $a0, $a0, 4         # next element
+    addi    $t1, $t1, -1        # i--
+    bnez    $t1, read_loop      # if(i != 0) read_loop
 
 # prepare for min,max space
     la      $a0, arr            # 陣列起始地址
-    li      $a1, 5              # 陣列大小
-    addi    $sp, $sp, -8        # 分配空間給 max 和 min
+    li      $a1, 5              # array size
+    addi    $sp, $sp, -8        # 分配空間給 max, min
     move    $a2, $sp            # max 
     addi    $a3, $sp, 4         # min 
-    jal     findMaxMin          # 呼叫函式
+    jal     findMaxMin
 
 # print the max
     lw 		$a0, 0($a2)         # move value of max into $a0
@@ -59,13 +60,13 @@ read_loop:
 
 #------------------------- procedure findMaxMin -----------------------------
 # $a0 陣列起始地址
-# $a1 陣列大小
+# $a1 array size
 # $a2 max 
 # $a3 min 
 # $t1 i
 .text
 findMaxMin:	
-	addi 	$sp, $sp, -4		# adiust stack for ra
+	addi 	$sp, $sp, -4		# adjust stack for ra
 	sw 		$ra, 0($sp)			# save the return address
 
     # 初始化 max 和 min
@@ -76,19 +77,19 @@ findMaxMin:
     li      $t1, 1              # i = 1
 
 findloop:
-    bge     $t1, $a1, done
+    bge     $t1, $a1, done      # if(i >= array size) done
     lw      $t2, 0($a0)         # $t2 = arr[i]
 max:
     lw      $t3, 0($a2)
-    blt     $t2, $t3, min
-    sw      $t2, 0($a2)
+    blt     $t2, $t3, min       # if(arr[i] < max) min
+    sw      $t2, 0($a2)         # max = arr[i]
 min:
     lw      $t3, 0($a3)
-    bgt     $t2, $t3, iplus
-    sw      $t2, 0($a3)
+    bgt     $t2, $t3, iplus     # if(arr[i] > min) i++
+    sw      $t2, 0($a3)         # min = arr[i]
 
 iplus:
-    addi    $a0, $a0, 4         # $a0 = arr[0]+1
+    addi    $a0, $a0, 4         # $a0 = arr[i]+1
     addi    $t1, $t1, 1         # i++
     j       findloop
 

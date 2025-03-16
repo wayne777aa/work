@@ -1,3 +1,4 @@
+#112550020
 .data
 	input_msg:	.asciiz "Enter an integer: "
 	newline: 	.asciiz "\n"

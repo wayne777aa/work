@@ -1,3 +1,4 @@
+#112550020
 .data
 	input_msg:	.asciiz "Please enter the first number: "
 	input_msg2:	.asciiz "Please enter the second number: "
@@ -71,7 +72,7 @@ gcd:
     move    $s0, $a1            # i = b
 
 check:
-    blez    $s0, return_one     # 如果 i <= 0，返回 1
+    blez    $s0, return_one     # if(i <= 0) return 1
 
 loop:
     # a % i
@@ -90,7 +91,7 @@ loop:
 
 next_i:
     addi    $s0, $s0, -1
-    bgtz    $s0, loop           # if i > 0, continue loop
+    bgtz    $s0, loop           # if(i > 0) continue loop
 
 return_one:
     li      $v0, 1              # return 1
