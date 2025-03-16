@@ -28,12 +28,12 @@ main:
 	move    $t1, $v0      		# store input in $t1 (set arugument of exponent)
 
 # jump to procedure exp
-    move    $a0, $t0  # base -> a0
-    move    $a1, $t1  # exp -> a1
+    move    $a0, $t0  			# base -> a0
+    move    $a1, $t1  			# exp -> a1
 	jal 	exp
 	move 	$t0, $v0			# save return value in t0 (because v0 will be used by system call) 
 
-# print the result of procedure factorial on the console interface
+# print the result of procedure exp on the console interface
 	li 		$v0, 1				# call system call: print int
 	move 	$a0, $t0			# move value of integer into $a0
 	syscall 					# run the syscall
