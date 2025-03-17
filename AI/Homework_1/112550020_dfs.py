@@ -4,13 +4,12 @@ from collections import deque
 edgeFile = 'edges.csv'
 
 def load_graph(filename):
-    """ 讀取 CSV 檔案並建立鄰接表 """
+    "建表"
     graph = {}
-    distances = {}
     
     with open(filename, newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
-        next(reader)  # 跳過標題列
+        next(reader)  # 跳過標題
         
         for row in reader:
             start, end, dist = int(row[0]), int(row[1]), float(row[2])
@@ -18,19 +17,18 @@ def load_graph(filename):
             if start not in graph:
                 graph[start] = []
             
-            graph[start].append(end)
-            distances[(start, end)] = dist  # 有向圖
+            graph[start].append((end, dist)) # 有向圖
     
-    return graph, distances
+    return graph
 
 def dfs(start, end):
-    graph, distances = load_graph(edgeFile)
-    stack = [(start, [start], 0)]  # (當前節點, 路徑, 總距離)
+    graph = load_graph(edgeFile)
+    stack = [(start, [start], 0)]  # (當前節點, 路徑, 總距離) FILO
     visited = set()
     num_visited = 0
     
     while stack:
-        node, path, total_dist = stack.pop()
+        node, path, total_dist = stack.pop() # 取出stack第一個
         
         if node in visited:
             continue
@@ -41,9 +39,9 @@ def dfs(start, end):
         if node == end:
             return path, round(total_dist, 3), num_visited
         
-        for neighbor in graph.get(node, []):
+        for neighbor, cost in graph.get(node, []): # stack加入所有neighbor
             if neighbor not in visited:
-                stack.append((neighbor, path + [neighbor], total_dist + distances[(node, neighbor)]))
+                stack.append((neighbor, path + [neighbor], total_dist + cost))
     
     return [], 0, num_visited  # 無法到達時回傳空路徑
 

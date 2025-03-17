@@ -3,15 +3,13 @@ import heapq
 edgeFile = 'edges.csv'
 heuristicFile = 'heuristic_values.csv'
 
-
 def load_graph(filename):
-    """ 讀取 CSV 檔案並建立鄰接表 """
+    "建表"
     graph = {}
-    distances = {}
     
     with open(filename, newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
-        next(reader)  # 跳過標題列
+        next(reader)  # 跳過標題
         
         for row in reader:
             start, end, dist = int(row[0]), int(row[1]), float(row[2])
@@ -19,10 +17,9 @@ def load_graph(filename):
             if start not in graph:
                 graph[start] = []
             
-            graph[start].append((end, dist))
-            distances[(start, end)] = dist  # 有向圖
+            graph[start].append((end, dist)) # 有向圖
     
-    return graph, distances
+    return graph
 
 def load_heuristics(filename):
     """ 讀取啟發式函數值 """
@@ -40,16 +37,16 @@ def load_heuristics(filename):
     return heuristics
 
 def astar(start, end):
-    graph, distances = load_graph(edgeFile)
+    graph = load_graph(edgeFile)
     heuristics = load_heuristics(heuristicFile)
-    pq = [(heuristics.get(start, 0), 0, start, [start])]  # (f值, g值, 當前節點, 路徑)
+    pq = [(heuristics.get(start, 0), start, [start], 0)]  # (f值(key), 當前節點, 路徑, 總距離)
     visited = {}
     num_visited = 0
     
     while pq:
-        _, total_dist, node, path = heapq.heappop(pq)
+        _, node, path, total_dist = heapq.heappop(pq) # 取出第一個
         
-        if node in visited and visited[node] <= total_dist:
+        if node in visited and visited[node] <= total_dist: # 沒走過或是原先的近
             continue
         
         visited[node] = total_dist
@@ -58,11 +55,11 @@ def astar(start, end):
         if node == end:
             return path, round(total_dist, 3), num_visited
         
-        for neighbor, cost in graph.get(node, []):
+        for neighbor, cost in graph.get(node, []): # priority queue更新所有neighbor
             new_cost = total_dist + cost
-            f_value = new_cost + heuristics.get(neighbor, {}).get(end, 0)
+            f_value = new_cost + heuristics.get(neighbor, {}).get(end, 0) # 找到neighbor, 回傳能到的點(沒找到回傳空字串), 從中找到end, 回傳hueristic(沒找到回傳0)
             if neighbor not in visited or new_cost < visited[neighbor]:
-                heapq.heappush(pq, (f_value, new_cost, neighbor, path + [neighbor]))
+                heapq.heappush(pq, (f_value, neighbor, path + [neighbor], new_cost))
     
     return [], 0, num_visited  # 無法到達時回傳空路徑
 
