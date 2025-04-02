@@ -30,12 +30,12 @@ class Board:
             return False
 
         # Place piece in the lowest available cell.
-        for row in range(self.row - 1, -1, -1):
+        for row in range(self.row - 1, -1, -1): # 從底層row 5開始找找到row 0
             if self.table[row][col] == 0:
                 self.table[row][col] = self.mark
                 break
 
-        self.mark = 3 - self.mark  # Switch players.
+        self.mark = 3 - self.mark  # Switch players. #3-1=2 , 3-2=1
         self.cnt += 1
         self.last = col
         self.valid = [c for c in range(self.column) if self.table[0][c] == 0]
@@ -72,7 +72,7 @@ class Board:
         # The game terminates if a win is detected or if the board is full.
         if self.win(self.mark) or self.win(3 - self.mark):
             return True
-        return (self.cnt == self.row * self.column)
+        return (self.cnt > self.row * self.column) # '==' => '>'
 
     def start(self, agents):
         """
@@ -150,7 +150,7 @@ def get_heuristic(board):
 
 
 def check_window(board, window, num_discs, piece):
-    """Return True if 'window' contains exactly 'num_discs' of 'piece' and the rest are empty."""
+    """Return True if 'window' contains exactly 'num_discs' of 'piece' and the rest are empty.""" # 數空格和自己的棋子有幾個可以知道有沒有對手的棋子
     return (window.count(piece) == num_discs and window.count(0) == board.connect - num_discs)
 
 def count_windows(board, num_discs, piece):

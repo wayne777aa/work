@@ -71,7 +71,7 @@ def get_human_move(event, board):
     :return: The column index chosen by the player.
     """
     x_pos = event.pos[0]
-    col = int(x_pos // SQUARESIZE)
+    col = int(x_pos // SQUARESIZE) #0~6
     return col
 
 # --------------------------------------------------------------------------------------
