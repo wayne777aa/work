@@ -14,6 +14,49 @@ module ALU_1bit(
 	output reg          cout        //1 bit carry out (output)
 	);
 		
-/* Write down your code HERE */
+wire a,b,sum;
 
+MUX_2to1 aselect(
+	.src1(src1),
+	.src2(~src1),
+	.select(Ainvert),
+	.result(a)
+	);
+MUX_2to1 bselect(
+	.src1(src2),
+	.src2(~src2),
+	.select(Binvert),
+	.result(b)
+	);
+// assign a = Ainvert? ~src1 : src1;
+// assign b = Binvert? ~src2 : src2;
+wire opand, opor, opadd;
+assign opand = a&b;
+assign opor = a|b;
+assign sum = a^b^cin;
+
+always @(*) begin
+	case (operation)
+		2'b00: begin
+			result = opand;
+			cout = 0;
+		end
+		2'b01: begin
+			result = opor;
+			cout = 0;
+		end
+		2'b10: begin
+			result = sum;
+			cout = (a & b) | (a & cin) | (b & cin);
+		end
+		2'b11: begin
+			result = sum; //為了set
+			cout = (a & b) | (a & cin) | (b & cin); //為了檢查overflow給set用
+		end
+		default: begin
+			result = 0;
+			cout = 0;
+		end
+	endcase
+end
 endmodule

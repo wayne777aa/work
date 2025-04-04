@@ -7,7 +7,10 @@ module MUX_2to1(
 	output reg result
 	);
 
-/* Write down your code HERE */
+always @(*) begin
+	result = select? src2: src1;
+end
+
 
 endmodule
 
