@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 `include "ALU_1bit.v"
 module ALU(
-	input                   rst_n,         // negative reset            (input)
+	input                   rst_n,         // negative reset            (input) // rst_n is unused because this ALU is combinational logic.
 	input	     [32-1:0]	src1,          // 32 bits source 1          (input)
 	input	     [32-1:0]	src2,          // 32 bits source 2          (input)
 	input 	     [ 4-1:0] 	ALU_control,   // 4 bits ALU control input  (input)
@@ -12,8 +12,9 @@ module ALU(
 	);
 
 wire [32:0]	cin;
-assign cin[0] = (ALU_control == 4'b0110 || ALU_control == 4'b0111) ? 1'b1 : 1'b0; //如果是減法需要+1
+assign cin[0] = (ALU_control == 4'b0110 || ALU_control == 4'b0111) ? 1'b1 : 1'b0; // 如果是減法需要+1
 wire [31:0] rawresult;
+reg set;
 
 ALU_1bit A0(
 	.src1(src1[0]),       
@@ -56,23 +57,21 @@ ALU_1bit A31(
 	.cout(cin[32])
 );
 
-reg set;
-
 always @(*) begin
-	set = cin[31] ^ cin[32] ^ rawresult[31];
-    case (ALU_control)
-        4'b0111: begin
+	set = cin[31] ^ cin[32] ^ rawresult[31]; // overflow ^ result[31](是負數)
+	case (ALU_control)
+		4'b0111: begin
 			result[0] = set;  // SLT only affects bit 0
 			result[31:1] = 0;
-			overflow = 0; //因為overflow可能會是1 但是SLT的V是0
-			cout = 0; //cin[32]可能是1,因為要檢查overflow, 但是SLT的C是0
+			overflow = 0; // 因為overflow可能會是1 但是SLT的V是0
+			cout = 0; // cin[32]可能是1,因為要檢查overflow, 但是SLT的C是0
 		end
-		default: begin //正常運作
+		default: begin // 正常運作
 			result = rawresult;
 			overflow = cin[31] ^ cin[32];
 			cout = cin[32];
 		end
-    endcase
+	endcase
 	zero = (result == 0);
 end
 
