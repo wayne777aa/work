@@ -58,7 +58,7 @@ ALU_1bit A31(
 );
 
 always @(*) begin
-	set = cin[31] ^ cin[32] ^ rawresult[31]; // overflow ^ result[31](是負數)
+	set = cin[31] ^ cin[32] ^ rawresult[31]; // overflow ^ result[31](111負數 set=1)(101正overflow set=0)(010負overflow set=1)
 	case (ALU_control)
 		4'b0111: begin
 			result[0] = set;  // SLT only affects bit 0
