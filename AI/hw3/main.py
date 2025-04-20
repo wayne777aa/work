@@ -56,20 +56,22 @@ def main():
 
     EPOCHS = 10
     for epoch in range(EPOCHS): #epoch
-        logger.info(f"Epoch {epoch+1}/{EPOCHS}") ##
-        train_loss = train(model, train_loader, criterion, optimizer, device)
-        val_loss, val_acc = validate(model, val_loader, criterion, device)
+        logger.info(f"Epoch {epoch+1}/{EPOCHS}") # add by myself
+        train_loss = train(model, train_loader, criterion, optimizer, device) # train
+        val_loss, val_acc = validate(model, val_loader, criterion, device) # Evaluate on validation set
 
-        logger.info(f"Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f} | Val Acc: {val_acc:.4f}") ##
-
+        logger.info(f"Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f} | Val Acc: {val_acc:.4f}") # add by myself
+        
+        # Store training and validation loss for plotting
         train_losses.append(train_loss)
         val_losses.append(val_loss)
 
         # (TODO) Print the training log to help you monitor the training process
         #        You can save the model for future usage
+        # Save the model if it achieves the best validation accuracy so far
         if val_acc > max_acc:
             max_acc = val_acc
-            torch.save(model.state_dict(), "best_cnn.pth")
+            torch.save(model.state_dict(), "best_cnn.pth") # Save best model weights
             logger.info("Best model updated")
 
     logger.info(f"Best Accuracy: {max_acc:.4f}")
