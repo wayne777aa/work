@@ -37,7 +37,9 @@ def main():
     """
     CNN - train and validate
     """
+    
     logger.info("Start training CNN")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
 
@@ -75,19 +77,20 @@ def main():
     """
     CNN - plot
     """
-    plot()
+    plot(train_losses, val_losses)
 
     """
     CNN - test
     """
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
-    test()
-
+    model.load_state_dict(torch.load("best_cnn.pth"))
+    test(model, test_loader, criterion, device)
+    
     """
     Decision Tree - grow tree and validate
     """
     logger.info("Start training Decision Tree")
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     conv_model = ConvNet().to(device)
     tree_model = DecisionTree(max_depth=7)
@@ -113,7 +116,7 @@ def main():
     test_predictions = tree_model.predict(test_features)
 
     results = []
-    for image_name, prediction in zip(test_paths, test_predictions.cpu().numpy()):
+    for image_name, prediction in zip(test_paths, test_predictions):
         results.append({'id': image_name, 'prediction': prediction})
     df = pd.DataFrame(results)
     df.to_csv('DecisionTree.csv', index=False)
