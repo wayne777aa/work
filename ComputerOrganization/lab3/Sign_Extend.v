@@ -13,9 +13,6 @@ output  [32-1:0] data_o;
 
 
 // Main function
-always @(*) begin
-
-end
+assign data_o = {{16{data_i[15]}}, data_i};
           
-endmodule      
-     
+endmodule

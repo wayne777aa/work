@@ -1,4 +1,4 @@
-// student ID
+// 112550020
 module MUX_2to1(
                data0_i,
                data1_i,
@@ -9,20 +9,18 @@ module MUX_2to1(
 parameter size = 0;			   
 			
 // I/O ports               
-input   [size-1:0] data0_i;          
-input   [size-1:0] data1_i;
-input              select_i;
+input       [size-1:0] data0_i;          
+input       [size-1:0] data1_i;
+input                  select_i;
 
-output  [size-1:0] data_o; 
+output  reg [size-1:0] data_o; 
 
 // Internal Signals
 
 
 // Main function
 always@(*)begin
-
+    data_o = select_i? data1_i: data0_i;
 end
 
-endmodule      
-          
-          
+endmodule
