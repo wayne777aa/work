@@ -1,35 +1,5 @@
 // 112550020
-module MUX_2to1(
-	input      src1,
-	input      src2,
-	input	   select,
-	output reg result
-	);
-
-always @(*) begin
-	result = select? src2: src1;
-end
-endmodule
-//------------------------------------------------------------------------------------------------------
-module MUX_4to1(
-	input			src1,
-	input			src2,
-	input			src3,
-	input			src4,
-	input   [2-1:0] select,
-	output reg		result
-	);
-
-always @(*) begin
-	case (select)
-		2'b00: result = src1;
-		2'b01: result = src2;
-		2'b10: result = src3;
-		2'b11: result = src4;
-		default: result = 0;
-	endcase
-end
-endmodule
+`include "MUX_2to1.v"
 //------------------------------------------------------------------------------------------------------
 
 module ALU_1bit(
@@ -46,18 +16,20 @@ module ALU_1bit(
 		
 wire a,b,sum;
 
-MUX_2to1 aselect(
-	.src1(src1),
-	.src2(~src1),
-	.select(Ainvert),
-	.result(a)
-	);
-MUX_2to1 bselect(
-	.src1(src2),
-	.src2(~src2),
-	.select(Binvert),
-	.result(b)
-	);
+MUX_2to1 #(.size(1)) aselect(
+    .data0_i(src1),
+    .data1_i(~src1),
+    .select_i(Ainvert),
+    .data_o(a)
+);
+
+
+MUX_2to1 #(.size(1)) bselect(
+    .data0_i(src2),
+    .data1_i(~src2),
+    .select_i(Binvert),
+    .data_o(b)
+);
 wire opand, opor, opadd;
 assign opand = a&b;
 assign opor = a|b;
@@ -92,6 +64,7 @@ endmodule
 module ALU(
 	input	     [32-1:0]	src1_i,         // 32 bits source 1          (input)
 	input	     [32-1:0]	src2_i,         // 32 bits source 2          (input)
+	input      	 [ 5-1:0] 	shamt_i,
 	input 	     [ 4-1:0] 	ctrl_i,   		// 4 bits ALU control input  (input)
 	output reg   [32-1:0]	result_o,       // 32 bits result            (output)
 	output reg              zero_o,         // 1 bit when the output is 0, zero must be set (output)
@@ -153,11 +126,11 @@ always @(*) begin
 			overflow = 0; // 因為overflow可能會是1 但是SLT的V是0
 		end
 		4'b1000: begin // sll (shamt)
-			result_o = src2_i << src1_i[4:0]; // src1_i = shamt
+			result_o = src2_i << shamt_i; // src1_i = shamt
 			overflow = 0;
 		end
 		4'b1001: begin // srl (shamt)
-			result_o = src2_i >> src1_i[4:0]; // src1_i = shamt
+			result_o = src2_i >> shamt_i; // src1_i = shamt
 			overflow = 0;
 		end
 		4'b1010: begin // sllv (rs)

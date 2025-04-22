@@ -1,15 +1,15 @@
 // 112550020
 module MUX_2to1(
-               data0_i,
-               data1_i,
-               select_i,
-               data_o
-               );
+    data0_i,
+    data1_i,
+    select_i,
+    data_o
+);
 
-parameter size = 0;			   
+parameter size = 32;
 			
 // I/O ports               
-input       [size-1:0] data0_i;          
+input       [size-1:0] data0_i;
 input       [size-1:0] data1_i;
 input                  select_i;
 
