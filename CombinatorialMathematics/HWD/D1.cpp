@@ -51,12 +51,12 @@ Node * buildCartesianTree (int arr[], int n){
 		// whose value is less than the current one
 		// This is the same as Step 2 mentioned in the
 		// algorithm
-		while (arr[last] >= arr[i] && last != root)
+		while (arr[last] > arr[i] && last != root)
 			last = parent[last];
 
 		// arr[i] is the smallest element yet; make it
 		// new root
-		if (arr[last] >= arr[i]){
+		if (arr[last] > arr[i]){
 			parent[root] = i;
 			leftchild[i] = root;
 			root = i;
@@ -77,50 +77,18 @@ Node * buildCartesianTree (int arr[], int n){
 	// parent, so we assign it -1
 	parent[root] = -1;
 
-	return (buildCartesianTreeUtil (root, arr, parent,
-									leftchild, rightchild));
+	return (buildCartesianTreeUtil (root, arr, parent, leftchild, rightchild));
 }
 
-void binaryEncode(Node* node, vector<int>& bits) {
-    if (!node) return;
+void binaryEncode(Node* node) {
+    if (node == NULL) return;
 
-    // 左子樹有 or 無
-    bits.push_back(node->left ? 1 : 0);
-    binaryEncode(node->left, bits);
-    // 右子樹有 or 無
-    bits.push_back(node->right ? 1 : 0);
-    binaryEncode(node->right, bits);
-    
-}
-
-int encodeToInt(const vector<int>& bits) {
-    int code = 0;
-    for (int b : bits) {
-        code = (code << 1) | b;
-    }
-    return code;
-}
-
-// Pre-order 序列化，遇到 null 記錄 -1
-void serialize(Node* node, vector<int>& result) {
-	if (!node) {
-		result.push_back(-1);
-		return;
-	}
-	result.push_back(node->data);
-	serialize(node->left, result);
-	serialize(node->right, result);
-}
-
-// 把序列 hash 成整數
-int encode(const vector<int>& seq) {
-	int code = 0;
-	const int MOD = 1e9 + 7;
-	const int BASE = 13331;
-	for (int x : seq) {
-		code = (1LL * code * BASE + (x + 1000000)) % MOD;  // 防負數
-	}
-	return code;
+	cout << (node->left ? 1 : 0);
+    cout << (node->right ? 1 : 0);
+	
+	binaryEncode(node->left);
+    binaryEncode(node->right);
+	
 }
 
 int main(){
@@ -136,11 +104,8 @@ int main(){
         Node *root = buildCartesianTree(arr, k);
 
         vector<int> bits;
-		binaryEncode(root, bits);
-
-		int code = encodeToInt(bits);
-
-        cout << code << '\n';
+		binaryEncode(root);
+		cout << endl;
     }
 
 	return 0;
