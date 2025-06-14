@@ -1,7 +1,7 @@
 // 112550020
 module Decoder( 
 	instr_op_i, 
-	ALU_Op_o, 
+	ALUOp_o, 
 	ALUSrc_o,
 	RegWrite_o,	
 	RegDst_o,
@@ -10,19 +10,17 @@ module Decoder(
 	MemRead_o, 
 	MemWrite_o, 
 	MemtoReg_o,
-	BranchType_o // todo
 );
      
 // TO DO
 // I/O ports
 input		[6-1:0] instr_op_i;
 
-output	reg [2-1:0] ALU_op_o; // 00加法;01減法;10 R-type;
+output	reg [2-1:0] ALUOp_o; // 00加法;01減法;10 R-type;
 output	reg	[2-1:0] RegDst_o, MemtoReg_o; // regdst 使用2 選 $ra (reg 31) // MemtoReg 使用2 寫入 PC+4
 output  reg	[2-1:0] Branch_o; // 使用 2 表示 bne 分支，需 MUX_3to1 處理
 output	reg			ALUSrc_o, RegWrite_o, Jump_o, MemRead_o, MemWrite_o;
 
-output 	reg 		BranchType_o;
 // Internal Signals
 
 
@@ -35,7 +33,7 @@ always@(*)begin
 			Branch_o 	= 0;
 			MemRead_o 	= 0;
 			MemtoReg_o 	= 0;
-			ALU_op_o 	= 2'b10;
+			ALUOp_o 	= 2'b10;
 			MemWrite_o 	= 0;
 			ALUSrc_o 	= 0;
 			RegWrite_o 	= 1;
@@ -46,7 +44,7 @@ always@(*)begin
 			Branch_o 	= 0;
 			MemRead_o 	= 0;
 			MemtoReg_o 	= 0;
-			ALU_op_o 	= 2'b00;
+			ALUOp_o 	= 2'b00;
 			MemWrite_o 	= 0;
 			ALUSrc_o 	= 1;
 			RegWrite_o 	= 1;
@@ -57,7 +55,7 @@ always@(*)begin
 			Branch_o 	= 0;
 			MemRead_o 	= 1;
 			MemtoReg_o 	= 1;
-			ALU_op_o 	= 2'b00;
+			ALUOp_o 	= 2'b00;
 			MemWrite_o 	= 0;
 			ALUSrc_o 	= 1;
 			RegWrite_o 	= 1;
@@ -68,7 +66,7 @@ always@(*)begin
 			Branch_o 	= 0;
 			MemRead_o 	= 0;
 			MemtoReg_o 	= 0;
-			ALU_op_o 	= 2'b00;
+			ALUOp_o 	= 2'b00;
 			MemWrite_o 	= 1;
 			ALUSrc_o 	= 1;
 			RegWrite_o 	= 0;
@@ -79,7 +77,7 @@ always@(*)begin
 			Branch_o 	= 1;
 			MemRead_o 	= 0;
 			MemtoReg_o 	= 0;
-			ALU_op_o 	= 2'b01;
+			ALUOp_o 	= 2'b01;
 			MemWrite_o 	= 0;
 			ALUSrc_o 	= 0;
 			RegWrite_o 	= 0;
@@ -90,7 +88,7 @@ always@(*)begin
 			Branch_o 	= 2; // 使用 2 表示 bne 分支，需 MUX_3to1 處理
 			MemRead_o 	= 0;
 			MemtoReg_o 	= 0;
-			ALU_op_o 	= 2'b01;
+			ALUOp_o 	= 2'b01;
 			MemWrite_o 	= 0;
 			ALUSrc_o 	= 0;
 			RegWrite_o 	= 0;
@@ -101,7 +99,7 @@ always@(*)begin
 			Branch_o 	= 0;
 			MemRead_o 	= 0;
 			MemtoReg_o 	= 0;
-			ALU_op_o 	= 2'b00;
+			ALUOp_o 	= 2'b00;
 			MemWrite_o 	= 0;
 			ALUSrc_o 	= 0;
 			RegWrite_o 	= 0;
@@ -112,7 +110,7 @@ always@(*)begin
 			Branch_o 	= 0;
 			MemRead_o 	= 0;
 			MemtoReg_o 	= 2; // 寫入 PC+4
-			ALU_op_o 	= 2'b00;
+			ALUOp_o 	= 2'b00;
 			MemWrite_o 	= 0;
 			ALUSrc_o 	= 0;
 			RegWrite_o 	= 1;
@@ -123,14 +121,12 @@ always@(*)begin
 			Branch_o 	= 0;
 			MemRead_o 	= 0;
 			MemtoReg_o 	= 0;
-			ALU_op_o 	= 2'b00;
+			ALUOp_o 	= 2'b00;
 			MemWrite_o 	= 0;
 			ALUSrc_o 	= 0;
 			RegWrite_o 	= 0;
 		end
 	endcase
 end
-
-endmodule
 
 endmodule
