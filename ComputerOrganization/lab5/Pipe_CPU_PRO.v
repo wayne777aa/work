@@ -147,8 +147,6 @@ Pipe_Reg #(.size(32)) IFID_INSTR(
     .write(ifid_write)
 );
 
-
-
 // Components in ID stage
 Reg_File RF(
     .clk_i(clk_i),
