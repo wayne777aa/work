@@ -1,0 +1,174 @@
+/* 全域樣式 */
+body {
+    font-family: "Microsoft JhengHei", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #333;
+}
+
+/* 標題欄 */
+header {
+    position: relative;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: larger;
+    color: rgb(0, 0, 0);
+}
+
+.index {
+    background: url("images/index_bg2.jpg") no-repeat center center; 
+    background-size: cover;
+    background-position-x: 50%;
+    background-position-y: 30%;
+}
+
+.kksh {
+    background: url("images/school.jpg") no-repeat center center; 
+    background-size: cover;
+    background-position-x: 50%;
+    background-position-y: 70%;
+}
+
+.game {
+    background: url("images/eldenring.jpg") no-repeat center center; 
+    background-size: cover;
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+/* 連結 */
+header nav {
+    padding: 10px 20px;
+    z-index: 3; /* 讓文字在上層 */
+}
+
+.nav_links {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav_links li {
+    margin-left: 20px;
+    position: relative;
+}
+
+.nav_links a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.nav_links a:hover {
+    font-weight: 600;
+}
+
+.nav_links a.active {
+    font-weight: 900;
+}
+
+.dropdown_content {
+    display: none;             /* 預設隱藏 */
+    position: absolute;
+    top: 100%;                 /* 出現在主選單下方 */
+    left: 0;
+    background: #222;
+    min-width: 140px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* 陰影 */
+    list-style: none;   /* 去掉圓點 */
+    margin: 0;          /* 去掉預設外距 */
+    padding: 0;         /* 去掉預設內距 */
+    text-align: left;
+    z-index: 4;
+}
+
+.dropdown_content li a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown_content li a:hover { /* 碰到時改字的顏色*/
+    color: rgb(84, 141, 168);
+}
+
+.nav_links li:hover .dropdown_content { /* 下拉選單顯示 */
+    display: block;
+}
+
+
+/* 標題 */
+header h1 {
+    font-size: 2.5em;
+    z-index: 2; /* 讓文字在上層 */
+}
+
+header p {
+    z-index: 2; /* 讓文字在上層 */
+}
+
+
+/* 內容 */
+.content {
+    display: flex;              /* 兩欄排版 */
+    align-items: flex-start;     /* 上方對齊 */
+    gap: 30px;                   /* 左右間距 */
+    max-width: 1000px;
+    margin: 0 auto;           /* 置中 */
+    padding: 20px;
+}
+
+.IMG {
+    margin: 50px;
+    flex: 1;                     /* 左欄佔比 */
+    text-align: center;
+}
+
+.IMG img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.TEXT {
+    margin: 30px;
+    flex: 2;                     /* 右欄佔比較大 */
+}
+
+/* 網站地圖 */
+
+.sitemap {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sitemap li {
+    margin: 8px 0;
+}
+
+.sitemap a {
+    color: rgb(0, 64, 128);
+    text-decoration: none;
+}
+
+.sitemap a:hover {
+    text-decoration: underline;
+}
+
+.sitemap ul {
+    margin-left: 20px; /* 子頁面往內縮 */
+    list-style-type: circle; /* 子清單顯示小圓點 */
+}
