@@ -2,26 +2,24 @@ import socket
 import json
 
 BUFFER_SIZE = 1024
+UDP_PORT_RANGE = range(18000, 18011)
 
 def run(username):
     print(f"[INFO] Hello {username}, you are Player B (waiting for invitations)")
 
-    # 讓使用者選擇 UDP port
-    while True:
-        try:
-            udp_port = int(input("Enter your UDP port (18000~18010): "))
-            if 18010 >= udp_port >= 18000:
-                break
-            print("[WARN] Port must be 18000~18010")
-        except ValueError:
-            print("[WARN] Invalid number")
-
-    # 建立 UDP socket 並綁定 port
     udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        udp_sock.bind(('', udp_port))
-    except OSError:
-        print(f"[ERROR] Port {udp_port} is already in use.")
+    udp_port = None
+
+    for port in UDP_PORT_RANGE:
+        try:
+            udp_sock.bind(('', port))
+            udp_port = port
+            break
+        except OSError:
+            continue
+    
+    if udp_port is None:
+        print(f"[ERROR] No available port in range {UDP_PORT_RANGE.start}–{UDP_PORT_RANGE.stop - 1}.")
         return
     
     print(f"[INFO] Listening for invitations on UDP port {udp_port}...")

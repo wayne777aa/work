@@ -87,7 +87,7 @@ def handle_login_or_register():
             return None
         else:
             print(f"[FAIL] {result['status']} - {result.get('reason', 'Unknown reason')}. try again")
-            continue
+            return None
 
 
 def main():

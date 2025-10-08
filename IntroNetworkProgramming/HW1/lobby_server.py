@@ -9,7 +9,7 @@ HOST = '0.0.0.0'   # 允許外部連入
 PORT = 12000
 DB_FILE = 'user_db.json'
 
-# 全域 lock，防止 race condition
+# 全域 lock
 db_lock = threading.Lock()
 
 # 載入帳號資料庫
@@ -60,9 +60,9 @@ def handle_client(conn, addr):
                 conn.sendall(b'{"status": "REGISTER_SUCCESS"}')
 
         elif action == "login":
-            if username not in db or db[username]["password"] != password:
+            if username not in db or db[username]["password"] != password: # 找不到帳號或密碼對不上
                 conn.sendall(b'{"status": "LOGIN_FAIL", "reason": "Wrong credentials"}')
-            elif db[username]["online"]: # 已登入
+            elif db[username]["online"]: # 已登入的情況
                 conn.sendall(b'{"status": "FAIL", "reason": "User already logged in. Please logout first"}')
             else:
                 db[username]["online"] = True

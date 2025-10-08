@@ -53,10 +53,10 @@ def update_stats(updates):
             resp = s.recv(1024).decode()
             try:
                 result = json.loads(resp)
-                if result.get("status") == "UPDATE_SUCCESS":
-                    print("[DEBUG] Stats updated successfully.")
-                else:
+                if result.get("status") != "UPDATE_SUCCESS":
                     print(f"[WARN] Failed to update stats: {result}")
+                # else:
+                #     print("[DEBUG] Stats updated successfully.")
             except json.JSONDecodeError:
                 print("[ERROR] Invalid JSON response from server.")
     except Exception as e:
