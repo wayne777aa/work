@@ -76,6 +76,16 @@ def handle_client(conn, addr):
                 }
                 conn.sendall(json.dumps(resp).encode())
         
+        elif action == "get_stats":
+            stats = db[username]
+            resp = {
+            "status": "STATS",
+            "win": stats["win"],
+            "draw": stats["draw"],
+            "lose": stats["lose"]
+            }
+            conn.sendall(json.dumps(resp).encode())
+        
         elif action == "update_stats":
             updates = req.get("updates", [])
             if not isinstance(updates, list):

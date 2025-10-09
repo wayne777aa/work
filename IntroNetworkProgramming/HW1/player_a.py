@@ -41,37 +41,45 @@ def run(username):
         return
 
     #  選一個目標來傳送邀請
-    print("\nAvailable Players:")
-    for i, (ip, port) in enumerate(found_targets):
-        print(f"{i+1}. {ip}:{port}")
-    
-    try:
-        idx = int(input("Select a player to invite (1~N): ")) - 1
-        target_ip, target_port = found_targets[idx]
-    except (ValueError, IndexError):
-        print("[ERROR] Invalid selection.")
-        return
+    while True:
+        print("\nAvailable Players:")
+        for i, (ip, port) in enumerate(found_targets):
+            print(f"{i+1}. {ip}:{port}")
+        
+        try:
+            idx = int(input("Select a player to invite (1~N, 0 to quit): ")) - 1
+            if idx == -1:
+                print("[INFO] Quit inviting.")
+                return
+            target_ip, target_port = found_targets[idx]
+        except (ValueError, IndexError):
+            print("[ERROR] Invalid selection.")
+            continue
 
-    invite_msg = json.dumps({
-        "action": "invite",
-        "from": username
-    }).encode()
-    udp_sock.sendto(invite_msg, (target_ip, target_port))
-    print(f"[INFO] Sent invitation to {target_ip}:{target_port}, waiting for response...")
+        # 傳送邀請
+        invite_msg = json.dumps({
+            "action": "invite",
+            "from": username
+        }).encode()
+        udp_sock.sendto(invite_msg, (target_ip, target_port))
+        print(f"[INFO] Sent invitation to {target_ip}:{target_port}, waiting for response...")
 
-    udp_sock.settimeout(10.0)
+        udp_sock.settimeout(10.0)
 
-    try:
-        data, addr = udp_sock.recvfrom(BUFFER_SIZE)
-        reply = json.loads(data.decode())
-        if reply.get("status") != "ACCEPT":
-            print("[INFO] Invitation was rejected.")
-            return
-    except socket.timeout:
-        print("[ERROR] No response from player.")
-        return
+        try:
+            data, addr = udp_sock.recvfrom(BUFFER_SIZE)
+            reply = json.loads(data.decode())
+            if reply.get("status") != "ACCEPT":
+                print("[INFO] Invitation was rejected.")
+                continue  # 回到選擇列表
+        except socket.timeout:
+            print("[ERROR] No response from player.")
+            continue  # 回到選擇列表
 
-    print("[SUCCESS] Invitation accepted.")
+        print("[SUCCESS] Invitation accepted.")
+        
+        # 如果成功，就 break 出迴圈開始 TCP 連線
+        break
 
     # 啟動 TCP server 等待對方連進來
     tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

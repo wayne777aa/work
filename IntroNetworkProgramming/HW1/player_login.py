@@ -23,6 +23,16 @@ def send_request(action, username, password):
         except json.JSONDecodeError:
             return {"status": "ERROR", "reason": "Invalid response"}
         
+def check_stats(username):
+    result = send_request("get_stats", username, "")
+    if result.get("status") == "STATS":
+        win = result.get("win", 0)
+        draw = result.get("draw", 0)
+        lose = result.get("lose", 0)
+        print(f"[STATS] Wins: {win}, Draws: {draw}, Losses: {lose}")
+    else:
+        print(f"[WARN] Failed to fetch stats: {result}")
+        
 def logout(username):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((LOBBY_HOST, LOBBY_PORT))
@@ -46,8 +56,9 @@ def enter_game_mode(username):
     print(f"\n[WELCOME] Hello {username}, please select your role:")
     print("1. Player A (Invite other players)")
     print("2. Player B (Wait for invitations)")
-    print("3. Logout")
-    choice = input("Enter 1 , 2 or 3: ").strip()
+    print("3. Check Statistics")
+    print("4. Logout")
+    choice = input("Enter 1-4: ").strip()
 
     if choice == "1":
         import player_a
@@ -58,6 +69,9 @@ def enter_game_mode(username):
         player_b.run(username)
         return True
     elif choice == "3":
+        check_stats(username)
+        return True
+    elif choice == "4":
         return False
     else:
         print("[ERROR] Invalid choice. Try again.")

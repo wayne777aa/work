@@ -72,7 +72,27 @@
 }
 ```
 
-### 3. [掃描] Player A → Player B (UDP)
+### 3. [看戰績] Player → Lobby Server (TCP)
+
+```json
+{
+    "action": "get_stats",
+    "username": "username",
+    "password": ""
+}
+```
+
+回應：
+```json
+{
+    "status": "STATS",
+    "win": 2,
+    "draw": 1,
+    "lose": 3
+}
+```
+
+### 4. [掃描] Player A → Player B (UDP)
 
 ```json
 {
@@ -85,7 +105,7 @@
 "WAITING"
 ```
 
-### 4. [邀請] Player A → Player B (UDP)
+### 5. [邀請] Player A → Player B (UDP)
 
 ```json
 {
@@ -109,7 +129,7 @@
 }
 ```
 
-### 5. [Game 中的下棋動作] Player A/B → 對方 (TCP)
+### 6. [遊戲中的下棋動作] Player A/B → 對方 (TCP)
 
 ```json
 {
@@ -119,7 +139,7 @@
 }
 ```
 
-### 6. [update statistics] 最後下棋的一方 → Lobby Server (TCP)
+### 7. [更新戰績] 最後下棋的一方 → Lobby Server (TCP)
 
 ```json
 {
@@ -147,7 +167,7 @@
 }
 ```
 
-### 7. [logout] Player → Lobby Server (TCP)
+### 8. [登出] Player → Lobby Server (TCP)
 
 ```json
 {
