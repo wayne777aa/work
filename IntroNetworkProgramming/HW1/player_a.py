@@ -4,11 +4,11 @@ import threading
 
 UDP_PORT_RANGE = range(17999, 18011)  # 可以掃描的 port 範圍
 SERVER_LIST = [
-    "127.0.0.1"
-    # "140.113.235.151",  # linux1.cs.nycu.edu.tw
-    # "140.113.235.152",  # linux2.cs.nycu.edu.tw
-    # "140.113.235.153",  # linux3.cs.nycu.edu.tw
-    # "140.113.235.154"   # linux4.cs.nycu.edu.tw
+    "127.0.0.1",
+    "140.113.235.151",  # linux1.cs.nycu.edu.tw
+    "140.113.235.152",  # linux2.cs.nycu.edu.tw
+    "140.113.235.153",  # linux3.cs.nycu.edu.tw
+    "140.113.235.154"   # linux4.cs.nycu.edu.tw
 ]
 
 BUFFER_SIZE = 1024

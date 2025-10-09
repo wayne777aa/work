@@ -63,7 +63,7 @@ def handle_client(conn, addr):
             if username not in db or db[username]["password"] != password: # 找不到帳號或密碼對不上
                 conn.sendall(b'{"status": "LOGIN_FAIL", "reason": "Wrong credentials"}')
             elif db[username]["online"]: # 已登入的情況
-                conn.sendall(b'{"status": "FAIL", "reason": "User already logged in. Please logout first"}')
+                conn.sendall(b'{"status": "LOGIN_FAIL", "reason": "User already logged in. Please logout first"}')
             else:
                 db[username]["online"] = True
                 save_db(db)
@@ -118,8 +118,8 @@ def handle_client(conn, addr):
         conn.close()
 
 def main():
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s: # TCP socket
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # reuse socket
         s.bind((HOST, PORT))
         s.listen()
         print(f"[START] Lobby Server listening on port {PORT}")
