@@ -82,7 +82,7 @@
 
 回應：
 ```json
-b"WAITING"
+"WAITING"
 ```
 
 ### 4. [邀請] Player A → Player B (UDP)
