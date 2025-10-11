@@ -2,7 +2,7 @@ import socket
 import json
 import time
 
-LOBBY_HOST = '127.0.0.1'  # TODO: change the Lobby IP
+LOBBY_HOST = '140.113.17.12'  # TODO: change the Lobby IP
 LOBBY_PORT = 12000
 
 def create_board():

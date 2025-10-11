@@ -1,7 +1,7 @@
 import socket
 import json
 
-LOBBY_HOST = '127.0.0.1'  # TODO: change the Lobby IP
+LOBBY_HOST = '140.113.17.12'  # TODO: change the Lobby IP
 LOBBY_PORT = 12000
 
 def send_request(action, username, password):

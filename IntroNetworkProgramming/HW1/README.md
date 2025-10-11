@@ -1,3 +1,6 @@
+# Network Programming HW1 
+#### 蔡懷恩 112550020
+
 ## 1. **System Architecture**
 
 系統由四個元件組成：
@@ -11,7 +14,6 @@
 ## 2. **Communication Details**
 
 通訊協定使用 JSON 格式。以下為具體範例：
-
 
 ### 1. [註冊] Player → Lobby Server (TCP)
 
