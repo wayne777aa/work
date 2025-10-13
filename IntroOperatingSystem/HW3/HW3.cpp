@@ -31,7 +31,7 @@ struct Segment{
 };
 Segment segments[15]; // 8 leaf segments + 7 merged
 bool segment_done[15];
-bool segment_busy[15];
+bool segment_busy[15]; // prevent sorting the same segment at same time
 pthread_mutex_t done_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 // ===== Bubble Sort =====
@@ -76,7 +76,7 @@ void check_merge(int left_id, int right_id, int parent_id){
         int end = segments[right_id].end;
 
         pthread_mutex_lock(&done_mutex);
-        segment_busy[parent_id] = true;  // 標記：正在被執行
+        segment_busy[parent_id] = true;
         pthread_mutex_unlock(&done_mutex);
 
         pthread_mutex_lock(&queue_mutex);
@@ -121,7 +121,7 @@ void* worker(void*){
         if (seg_id != -1){
             pthread_mutex_lock(&done_mutex);
             segment_done[seg_id] = true;
-            segment_busy[seg_id] = false; // 標記執行完畢
+            segment_busy[seg_id] = false;
             pthread_mutex_unlock(&done_mutex);
         }
     }
@@ -186,7 +186,7 @@ void reset_all(){
 }
 
 // ===== Core Runner =====
-void run_with_threads(int num_threads) {
+void run_with_threads(int num_threads){
     reset_all();
     read_input("input.txt");
     
@@ -201,7 +201,7 @@ void run_with_threads(int num_threads) {
     gettimeofday(&start, 0);
 
     // Initial jobs (8 bubble sort)
-    for (int i = 0; i < NUM_PARTS; ++i) {
+    for (int i = 0; i < NUM_PARTS; ++i){
         pthread_mutex_lock(&queue_mutex);
         job_queue.push({BUBBLE_SORT, segments[i].start, 0, segments[i].end});
         pthread_mutex_unlock(&queue_mutex);
@@ -209,7 +209,7 @@ void run_with_threads(int num_threads) {
     }
 
     // Monitor and trigger merge jobs
-    while (!segment_done[14]) {
+    while (!segment_done[14]){
         check_merge(0, 1, 8);
         check_merge(2, 3, 9);
         check_merge(4, 5, 10);
@@ -222,7 +222,7 @@ void run_with_threads(int num_threads) {
 
     gettimeofday(&end, 0);
     double ms = (end.tv_sec - start.tv_sec) * 1000 + (end.tv_usec - start.tv_usec) / 1000.0;
-    printf("[Threads=%d] Elapsed time: %.3f ms\n", num_threads, ms);
+    printf("worker thread #%d, elapsed %.6f ms\n", num_threads, ms);
 
     string fname = "output_" + to_string(num_threads) + ".txt";
     write_output(fname);
@@ -230,7 +230,7 @@ void run_with_threads(int num_threads) {
 
 // ===== Main =====
 int main(){
-    for (int t = 7; t <= 8; ++t){
+    for (int t = 1; t <= 8; ++t){
         run_with_threads(t);
     }
     return 0;
