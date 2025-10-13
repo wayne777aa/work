@@ -5,8 +5,10 @@
 
 const int MOD = 1e9;
 
-int main(int argc, char** argv) {
-    int MAXN = atoi(argv[1]); 
+
+int main() {
+    int MAXN;
+    std::cin >> MAXN;
     
     std::srand(std::time(0));
     std::ofstream out("input.txt"); // Open the file for writing
