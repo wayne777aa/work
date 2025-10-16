@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>自我介紹</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- 主要內容 -->
+    <header class="index">
+        <nav>
+            <ul class="nav_links">
+                <li><a href="index.html" class="active">首頁</a></li>
+                <li>
+                    <a href="aboutme.html">關於我</a>
+                    <ul class="dropdown_content">
+                        <li><a href="game.html">遊戲</a></li>
+                        <li><a href="vtuber.html">Vtuber</a></li>
+                    </ul>
+                </li>
+                <li><a href="sitemap.html">網站地圖</a></li>
+            </ul>
+        </nav>
+        <h1>首頁</h1>
+    </header>
+
+    <main>
+        <div class="BTN">
+            <button id="showPopupBtn">自我介紹</button>
+            <button id="to_about">關於我</button>
+            <button id="to_game">遊戲</button>
+            <button id="to_VTuber">VTuber</button>
+        </div>
+    </main>
+    
+    <!-- 自動彈出的 popup（unscrollable） -->
+    <div id="autoPopup" class="popup hidden">
+        <div class="popup-content unscrollable">
+            <span class="close_btn" onclick="closePopup('autoPopup')">&times;</span>
+            <h2>Dynamic Web Programming HW2</h2>
+            <p>學號:112550020</p>
+            <p>姓名:蔡懷恩</p>
+        </div>
+    </div>
+    
+    <!-- 手動點擊的 popup（scrollable） -->
+
+
+    <div id="manualPopup" class="popup hidden">
+        <div class="popup-content scrollable">
+            <span class="close_btn" onclick="closePopup('manualPopup')">&times;</span>
+
+            <div class="popup-body">
+                <div class="IMG">
+                    <img src="images/img2.jpg" alt="natsuneko">
+                </div>
+                <h2>自我介紹</h2>
+                <p>大家好</p>
+                <p>我是蔡懷恩</p>
+                <p>資工系大三</p>
+                <p>高雄人</p>
+                <p>來自中山大學附中</p>
+                <p>興趣是玩遊戲尤其是挑戰自己的遊戲</p>
+                <p>尤其是挑戰自己的遊戲</p>
+                <p>另外還有推Vtuber</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

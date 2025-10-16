@@ -1,0 +1,421 @@
+/* 全域樣式 */
+body {
+    font-family: "Microsoft JhengHei", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* 標題欄 */
+header {
+    position: relative;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: larger;
+    color: rgb(0, 0, 0);
+}
+
+.index {
+    background: url("images/index_bg2.jpg") no-repeat center center; 
+    background-size: cover;
+    background-position-x: 50%;
+    background-position-y: 30%;
+}
+
+.game {
+    background: url("images/eldenring.jpg") no-repeat center center; 
+    background-size: cover;
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+/* 連結 */
+header nav {
+    padding: 10px 20px;
+    z-index: 3; /* 讓文字在上層 */
+}
+
+.nav_links {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav_links li {
+    margin-left: 20px;
+    position: relative;
+}
+
+.nav_links a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.nav_links a:hover {
+    font-weight: 600;
+}
+
+.nav_links a.active {
+    font-weight: 900;
+}
+
+.dropdown_content {
+    display: none;             /* 預設隱藏 */
+    position: absolute;
+    top: 100%;                 /* 出現在主選單下方 */
+    left: 0;
+    background: #222;
+    min-width: 140px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* 陰影 */
+    list-style: none;   /* 去掉圓點 */
+    margin: 0;          /* 去掉預設外距 */
+    padding: 0;         /* 去掉預設內距 */
+    text-align: left;
+    z-index: 4;
+}
+
+.dropdown_content li a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown_content li a:hover { /* 碰到時改字的顏色*/
+    color: rgb(84, 141, 168);
+}
+
+.nav_links li:hover .dropdown_content { /* 下拉選單顯示 */
+    display: block;
+}
+
+
+/* 標題 */
+header h1 {
+    font-size: 2.5em;
+    z-index: 2; /* 讓文字在上層 */
+}
+
+header p {
+    z-index: 2; /* 讓文字在上層 */
+}
+
+
+/* 內容 */
+.content {
+    display: flex;              /* 兩欄排版 */
+    align-items: flex-start;     /* 上方對齊 */
+    gap: 30px;                   /* 左右間距 */
+    max-width: 1000px;
+    margin: 0 auto;           /* 置中 */
+    padding: 20px;
+}
+
+.IMG {
+    margin: 50px;
+    flex: 1;                     /* 左欄佔比 */
+    text-align: center;
+}
+
+.IMG img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.TEXT {
+    margin: 30px;
+    flex: 2;                     /* 右欄佔比較大 */
+}
+
+.BTN {
+    display: flex;
+    flex-direction: column;   /* 垂直排列 */
+    align-items: center;      /* 水平置中 */
+    gap: 20px;                /* 按鈕之間的距離 */
+    margin-top: 50px;
+}
+
+.BTN button {
+    width: 200px;             /* 固定寬度 */
+    height: 60px;             /* 固定高度 */
+    font-size: 22px;          /* 統一文字大小 */
+    font-weight: bold;
+    background-color: white;
+    border: 2px solid #555;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.BTN button:hover {
+    background-color: #f2f2f2;
+    transform: scale(1.05);   /* hover 有輕微放大效果 */
+}
+
+/* 網站地圖 */
+
+.sitemap {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sitemap li {
+    margin: 8px 0;
+}
+
+.sitemap a {
+    color: rgb(0, 64, 128);
+    text-decoration: none;
+}
+
+.sitemap a:hover {
+    text-decoration: underline;
+}
+
+.sitemap ul {
+    margin-left: 20px; /* 子頁面往內縮 */
+    list-style-type: circle; /* 子清單顯示小圓點 */
+}
+
+/* Popup */
+.popup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* 背景變暗 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup.hidden {
+    display: none;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 25%;
+    min-height: 25%;
+    max-height: 50%;
+    position: relative;
+}
+
+/* 禁止滾動 */
+.popup-content.unscrollable {
+    overflow: hidden;
+}
+
+/* 可滾動內容 */
+.popup-content.scrollable {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-body {
+    overflow-y: auto;
+    flex: 1;                /* 撐滿剩餘空間 */
+    margin-top: 20px;       /* 預留 X 按鈕高度 */
+}
+
+/* 關閉按鈕樣式 */
+.close_btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.close_btn:hover {
+    color: rgb(255, 0, 0);
+}
+
+/* 計時器樣式 */
+#timer {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-size: 30px;
+    font-family: monospace;
+}
+
+.popup_ad {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: url("images/hanafubuki.jpg") no-repeat center center;
+    background-size: cover;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    padding: 15px 20px;
+    border: 1px solid black;
+    display: block;
+    border-radius: 5px;
+    width: 30vw;
+    height: 35vh;
+}
+
+.popup_ad::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.popup_ad.hidden {
+    display: none;
+}
+
+.popup_content {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.popup_controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.popup_controls .playBTN {
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #b60000;     /* 百鬼あやめ風的桃紅色 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+}
+
+.popup_controls .playBTN:hover {
+    background-color: #c80606;     /* hover 變亮 */
+    transform: scale(1.05);
+}
+
+.popup_content p {
+    color: black;
+    font-size: larger;
+}
+
+.ad_close_btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 5;
+}
+
+.ad_close_btn:hover {
+    color: rgb(255, 0, 0);
+}
+
+.youtube_btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.youtube-btn img {
+    width: 40px;
+    height: auto;
+    display: block;
+}
+
+/* 按鈕容器 */
+.popup2-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* confirm popup本體 */
+.popup2-content {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.popup2-content h2 {
+    margin-top: 0;
+}
+
+/* confirm popup 按鈕 */
+.popup2-content button {
+    padding: 6px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.popup2-content button:hover {
+    background-color: #546bff;
+}
+
+
+
+body.noscroll { /* 禁止滾動 */
+    overflow: hidden;  
+}
+
+/* Scroll Animation */
+.trigger_text {
+    opacity: 0;
+    transform: translateX(300px);  /* 一開始在右邊 100px 外 */
+    transition: opacity 1.0s ease-out, transform 1.0s ease-out;     /* 平滑地過渡進來 */
+}
+
+
+.trigger_text.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.to_be_continued {
+    margin: 200px 0; /* 拉開距離方便測試  */
+    text-align: center;
+    font-size: 24px;
+}
