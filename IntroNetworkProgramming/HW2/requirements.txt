@@ -1,0 +1,2 @@
+# Tested on Python 3.10.12
+pygame>=2.6.0
