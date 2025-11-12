@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack 21 點遊戲</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>♠ Let's Play Blackjack! ♥</h1>
+
+    <div id="game-area">
+        <div class="section" id="dealer-section">
+            <h2>莊家</h2>
+            <div class="cards" id="dealer-cards"></div>
+            <p id="dealer-points">點數：0</p>
+        </div>
+
+        <div class="section" id="player-section">
+            <h2>玩家</h2>
+            <div class="cards" id="player-cards"></div>
+            <p id="player-points">點數：0</p>
+        </div>
+    </div>
+
+    <div id="button-area">
+        <button id="deal-btn" disabled>🃏 發牌</button>
+        <button id="hit-btn" disabled>➕ 要牌</button>
+        <button id="stand-btn" disabled>✋ 停牌</button>
+        <button id="cheat-btn" class="off">😈 作弊</button>
+        <button id="show-btn">📊 顯示紀錄</button>
+        <button id="reset-btn">♻️ 重設</button>
+    </div>
+
+    <div id="bet-section" style="text-align:center; margin-bottom: 10px;">
+        <label>下注金額：</label>
+        <input type="number" id="bet-input" value="100" min="10" step="10" style="width:80px;">
+        <button id="bet-btn">確認下注</button>
+        <span id="money-display">💰 餘額：1000</span>
+    </div>
+
+    <div id="record-section">
+        <h2>遊戲紀錄</h2>
+        <table id="record-table">
+            <thead>
+                <tr>
+                    <th>回合</th>
+                    <th>遊玩時間</th>
+                    <th>玩家點數</th>
+                    <th>莊家點數</th>
+                    <th>剩下金額</th>
+                    <th>莊家手牌</th>
+                    <th>玩家手牌</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div id="message-box" class="hidden">
+        <div id="message-content">
+            <p id="message-text"></p>
+            <button id="message-ok">確定</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

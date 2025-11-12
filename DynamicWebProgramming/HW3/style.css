@@ -1,0 +1,168 @@
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: radial-gradient(circle at top, #005f73, #001219);
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 2.2em;
+    color: #ffd60a;
+}
+
+#game-area {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 80px;
+}
+
+.section {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    width: 280px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 80px;
+    margin-bottom: 10px;
+}
+
+.cards img {
+    width: 60px;
+    height: 90px;
+    margin: 4px;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+#button-area {
+    margin-top: 30px;
+}
+
+button {
+    font-size: 1em;
+    margin: 6px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #94d2bd;
+    color: #001219;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: #e9d8a6;
+    transform: scale(1.05);
+}
+
+#bet-btn:disabled,
+#deal-btn:disabled,
+#hit-btn:disabled,
+#stand-btn:disabled {
+    opacity: 0.5;          /* 透明度變低，看起來變暗 */
+    cursor: not-allowed;   /* 滑鼠變成禁止符號 */
+    background-color: #999; /* 改背景顏色 */
+    color: #eee;           /* 文字變淡 */
+}
+
+#cheat-btn.on {
+    background-color: rgb(255, 53, 53);
+}
+
+#record-section {
+    margin: 40px auto;
+    width: 80%;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+#record-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#record-table th, #record-table td {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 12px;
+}
+
+#record-table th {
+    background-color: rgba(148, 210, 189, 0.3);
+}
+
+#record-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.card {
+  display: inline-block;
+  background: white;
+  color: black;
+  width: 50px;
+  height: 70px;
+  margin: 5px;
+  line-height: 70px;
+  border-radius: 8px;
+  font-size: 20px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+.card.hidden {
+  background: gray;
+  color: transparent;
+  text-shadow: none;
+}
+
+/* ========== 自訂訊息框 ========== */
+#message-box.hidden {
+    display: none;
+}
+
+#message-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#message-content {
+    background: white;
+    color: black;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    text-align: center;
+    width: 250px;
+}
+
+#message-content button {
+    background: #0077b6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#message-content button:hover {
+    background: #00b4d8;
+}
