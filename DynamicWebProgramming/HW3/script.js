@@ -109,6 +109,8 @@ function deal() {
     }
     document.getElementById("hit-btn").disabled = false;
     document.getElementById("stand-btn").disabled = false;
+    document.getElementById("deal-btn").disabled = true;
+
     createDeck();
     shuffleDeck();
 
@@ -128,7 +130,8 @@ async function hit() {
     playerHand.push(drawCard());
     updatePoints(false);
     renderHands(false);
-    await new Promise(r => setTimeout(r, 300)); // 延遲 0.5 秒
+    // 延遲 0.5 秒，避免還沒更新就顯示訊息
+    await new Promise(r => setTimeout(r, 300)); 
 
     if (playerPoints > 21) {
         renderHands(true);
@@ -379,31 +382,3 @@ document.getElementById("bet-btn").addEventListener("click", setBet);
 window.addEventListener("DOMContentLoaded", () => {
     loadMoneyFromLocalStorage();
 });
-
-
-
-// LocalStorage - 跨回合保存
-// key: "blackjack_local"
-/*
-{
-  rounds: [
-    {
-      round: 1,
-      playerPoints: 19,
-      dealerPoints: 21,
-      playerMoney: 950,
-      playTime: "2025-11-12 23:58"
-    },
-    ...
-  ]
-}
-*/
-// SessionStorage - 單次遊戲保存
-// key: "blackjack_session"
-/*
-{
-  round: 1,
-  playerCards: ["K♠", "9♥"],
-  dealerCards: ["A♦", "K♣"]
-}
-*/
