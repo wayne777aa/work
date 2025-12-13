@@ -5,7 +5,7 @@ import zipfile
 from io import BytesIO
 from protocal import send_msg, recv_msg
 
-DEV_HOST = "127.0.0.1"
+DEV_HOST = "127.0.0.1"  # change for local
 # DEV_HOST = "140.113.17.12"  # change for remote
 DEV_PORT = 10070
 
@@ -206,7 +206,7 @@ class DeveloperClient:
         }
         send_msg(self.sock, header)
         res = recv_msg(self.sock)
-        print("[Header resp]", res)
+        print("[Header response]", res)
 
         if not res or res.get("action") != "dev_upload_ready":
             print("[Error] server 不接受上傳 (dev_upload_ready 失敗)")
@@ -221,7 +221,7 @@ class DeveloperClient:
 
         # 3) 等最後結果
         res = recv_msg(self.sock)
-        print("[Final resp]", res)
+        print("[Final response]", res)
 
     # ============================================================
     # 下/上架遊戲
