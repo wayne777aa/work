@@ -536,7 +536,7 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((BIND_HOST, DEV_PORT))
     s.listen(5)
-    print(f"[DevServer] listening on {BIND_HOST}:{DEV_PORT}")
+    print(f"[DevServer] listening on {DEV_HOST}:{DEV_PORT}")
 
     while True:
         conn, addr = s.accept()

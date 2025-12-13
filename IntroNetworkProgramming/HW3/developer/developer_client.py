@@ -5,8 +5,8 @@ import zipfile
 from io import BytesIO
 from protocal import send_msg, recv_msg
 
-DEV_HOST = "127.0.0.1"  # change for local
-# DEV_HOST = "140.113.17.12"  # change for remote
+# DEV_HOST = "127.0.0.1"  # change for local
+DEV_HOST = "140.113.17.12"  # change for remote
 DEV_PORT = 10070
 
 # 所有開發者的遊戲都放這裡：developing/<developer_name>/<game_name>/

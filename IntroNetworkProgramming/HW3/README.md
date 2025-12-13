@@ -152,17 +152,17 @@ Client 端：
     - 可通過 `pip install pygame` 下載
 ---
 ## 6. 可修改連線資訊（IP / Port）
-如果要改連線設定，只需要編輯以下檔案中的常數：
+如果要改連線設定，只需要編輯以下檔案中的常數，主要只有修改HOST：
 - Server 端（系計機器）：
+    - `developer_server.py`：
+        - `DEV_HOST`, `DEV_PORT`, `DB_PORT`
+    - `lobby_server.py`：
+        - `LOBBY_HOST`, `LOBBY_PORT`, `DB_PORT`
     - `db_server.py`：
         - `PORT`
-    - `developer_server.py`：
-        - `DB_PORT`, `DEV_HOST`, `DEV_PORT`
-    - `lobby_server.py`：
-        - `DB_PORT`, `LOBBY_HOST`, `LOBBY_PORT`
     - `game_server.py`：
         - `LOBBY_PORT`（用於 GAME_OVER 回報）
-- Client 端（助教本地機器）：
+- Client 端（本地機器）：
     - `developer_client.py`：
         - `DEV_HOST, DEV_PORT`
     - `player_client.py`：

@@ -926,7 +926,7 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((BIND_HOST, LOBBY_PORT))
     s.listen(5)
-    print(f"[Lobby] listening on {BIND_HOST}:{LOBBY_PORT}")
+    print(f"[Lobby] listening on {LOBBY_HOST}:{LOBBY_PORT}")
 
     while True:
         conn, addr = s.accept()
