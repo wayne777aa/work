@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "description": "剪刀石頭布，兩人對戰。先達兩勝的獲勝。\n操作說明: 依提示輸入 rock / paper / scissors。",
+  "changelog": "反覆嘗試連線",
+  "max_player": 2
+}

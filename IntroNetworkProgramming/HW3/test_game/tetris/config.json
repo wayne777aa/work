@@ -1,5 +1,5 @@
 {
-    "version": "1.0.5",
+    "version": "1.0.0",
     "description": "俄羅斯方塊對戰。 \n操作說明: 方向鍵 ← → 移動 / ↓ Soft Drop / ↑ Hard Drop / Z, X 旋轉。 \n得分方式: 每消一行 +100 分。 \n結束條件: 兩位玩家皆死亡（頂滿）或時間超過 120 秒。",
     "changelog": "加入操作說明",
     "max_player": 2

@@ -64,7 +64,7 @@ Server 端（系計機器）：
   - 接收遊戲結束的 GAME_OVER 回報，紀錄勝負 / 遊戲紀錄。
   - 處理玩家對「剛玩完遊戲」的評分與評論。
 
-- `server_games/<game_name>/game_server.py` + `game_logic.py`：示範遊戲 Server（雙人 Tetris）。
+- `server_games/<game_name>/game_server.py`：示範遊戲 Server（雙人 Tetris）。
   - 固定 tick（0.5 秒）更新遊戲，維護每個玩家的 board / score / alive 狀態。
   - 兩位玩家都結束或時間到 → 廣播 GAME_OVER，並通知 Lobby Server。
 
@@ -82,7 +82,7 @@ Client 端：
   - 遊戲結束後可針對 **上一局剛玩完的遊戲** 給 1–5 分並寫評論。
 
 - `server_games/<game_name>/game_client.py`：示範遊戲 GUI Client（Tetris，使用 pygame）。
-  - 由 Player Client 在收到 `game_start` 廣播後自動 `subprocess` 啟動。
+  - 由 Player Client 在收到 `game_start` 廣播後等待確認之後利用 `subprocess` 啟動。
 
 共用：
 
@@ -105,7 +105,6 @@ Client 端：
 │
 ├── server_games/          # Server 端儲存的遊戲
 │   └── <game_name>/
-│       ├── game_logic.py
 │       ├── game_server.py
 │       ├── protocal.py
 │       ├── config.json
@@ -134,8 +133,8 @@ Client 端：
 │               ├── protocal.py
 │               └── config.json # 需由developer自行填寫:"version", "description"
 │
-├── test_game.py # 測試用的小遊戲或測試腳本
-|   ├── test_game.py
+├── test_game.py # 測試用的小遊戲
+|   ├── copy_to_developing.py # 把想要的遊戲移到指定developer的資料夾
 │   └── <game_name>/
 │
 └── README.md

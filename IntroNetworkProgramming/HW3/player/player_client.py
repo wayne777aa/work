@@ -56,6 +56,8 @@ class PlayerClient:
         self.pending_review = None   # {"game_id": ..., "game_name": ...}
         self.waiting_action = None   # 目前 send_and_wait 在等哪個 action
 
+        self.pending_game_start = None   # 等主 thread 來啟動遊戲
+
         threading.Thread(target=self.listen, daemon=True).start()
 
     # -------------------------------
@@ -91,8 +93,9 @@ class PlayerClient:
                 # === 遊戲開始訊號 ===
                 if action == "game_start":
                     print(f"[Game] 遊戲即將開始：{data}")
-                    if self.on_game_start:
-                        self.on_game_start(data)
+                    with self.cv:
+                        self.pending_game_start = data
+                    print("\n按 Enter 加入遊戲...")
                     continue
 
                 # === 遊戲結束後：Lobby 要求可以評分 ===
@@ -439,14 +442,19 @@ def main():
 
         print(f"啟動遊戲程式：{client_py}")
         try:
-            # 開新 process，不 block PlayerClient
-            subprocess.Popen(
-                ["python3", client_py, host, str(port), username, str(client.room_id)],
+            subprocess.run(
+                ["python3", client_py, host, str(port), username, str(client.room_id)]
             )
         except Exception as e:
             print(f"⚠️ 無法啟動遊戲: {e}")
 
-    client.on_game_start = launch_game_client
+    def check_and_run_game():
+        """如果有等待中的 game_start，就在主 thread 啟動遊戲並 block 住 menu。"""
+        with client.cv:
+            start_data = client.pending_game_start
+            client.pending_game_start = None
+        if start_data:
+            launch_game_client(start_data)
 
     def do_review():
         if not client.pending_review:
@@ -485,6 +493,7 @@ def main():
     # -------------------------------
     while True:
         # === 依照是否在房間內，顯示不同選單 ===
+        check_and_run_game()
         if client.room_id is None:
             # -------- 大廳階段 --------
             print("\n=== Lobby Menu ===")
@@ -759,6 +768,7 @@ def main():
                 input("\n按 Enter 返回選單...")
 
         else:
+            check_and_run_game()
             # -------- 房間內階段 --------
             print(f"\n=== Room Menu (Room {client.room_id}) ===")
             print("1. 房間資訊")
