@@ -12,7 +12,8 @@ from protocal import send_msg, recv_msg
 DB_HOST = "127.0.0.1"
 DB_PORT = 10080
 
-BIND_HOST  = "0.0.0.0"          # 真的綁在所有介面
+BIND_HOST  = "0.0.0.0"
+
 LOBBY_HOST = "127.0.0.1" # change for local
 # LOBBY_HOST = "140.113.17.12" # change for remote
 LOBBY_PORT = 10090

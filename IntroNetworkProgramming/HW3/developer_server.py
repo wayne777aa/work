@@ -10,15 +10,19 @@ from protocal import send_msg, recv_msg
 DB_HOST = "127.0.0.1"
 DB_PORT = 10080
 
+BIND_HOST  = "0.0.0.0"
+
 DEV_HOST = "127.0.0.1" # change for local
 # DEV_HOST = "140.113.17.12" # change for remote
 DEV_PORT = 10070
 
 SERVER_GAMES_ROOT = "./server_games"
 
-# 線上開發者狀態
-developer_states = {}  # name -> {"conn": conn}
 
+# ============================================================
+# 線上開發者狀態
+# ============================================================
+developer_states = {}  # name -> {"conn": conn}
 
 # ============================================================
 # DB Connection Wrapper
@@ -530,9 +534,9 @@ def handle_client(conn, addr):
 # ==============================
 def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((DEV_HOST, DEV_PORT))
+    s.bind((BIND_HOST, DEV_PORT))
     s.listen(5)
-    print(f"[DevServer] listening on {DEV_HOST}:{DEV_PORT}")
+    print(f"[DevServer] listening on {BIND_HOST}:{DEV_PORT}")
 
     while True:
         conn, addr = s.accept()
