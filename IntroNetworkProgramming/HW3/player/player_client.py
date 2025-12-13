@@ -149,7 +149,7 @@ class PlayerClient:
                     game_name = data.get("game_name", "<未知>")
                     latest = data.get("latest_version", "")
                     print()
-                    print("⚠️ 你沒有最新的遊戲版本，需要更新才能開始遊戲。")
+                    print("⚠️ 你沒有最新的遊戲版本，需要下載最新版本才能開始遊戲。")
                     print(f"   遊戲：{game_name}")
                     if latest:
                         print(f"   需要版本：{latest}")
