@@ -10,7 +10,7 @@ from protocal import send_msg, recv_msg
 DB_HOST = "127.0.0.1"
 DB_PORT = 10080
 
-DEV_HOST = "127.0.0.1"
+DEV_HOST = "127.0.0.1" # change for local
 # DEV_HOST = "140.113.17.12" # change for remote
 DEV_PORT = 10070
 

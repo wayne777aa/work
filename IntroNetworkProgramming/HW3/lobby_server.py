@@ -12,6 +12,7 @@ from protocal import send_msg, recv_msg
 DB_HOST = "127.0.0.1"
 DB_PORT = 10080
 
+BIND_HOST  = "0.0.0.0"          # 真的綁在所有介面
 LOBBY_HOST = "127.0.0.1" # change for local
 # LOBBY_HOST = "140.113.17.12" # change for remote
 LOBBY_PORT = 10090
@@ -922,9 +923,9 @@ def handle_client(conn, addr):
 # -------------------------------------------------
 def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((LOBBY_HOST, LOBBY_PORT))
+    s.bind((BIND_HOST, LOBBY_PORT))
     s.listen(5)
-    print(f"[Lobby] listening on {LOBBY_HOST}:{LOBBY_PORT}")
+    print(f"[Lobby] listening on {BIND_HOST}:{LOBBY_PORT}")
 
     while True:
         conn, addr = s.accept()
